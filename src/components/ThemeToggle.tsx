@@ -20,7 +20,7 @@ export default function ThemeToggle({
   useEffect(() => {
     try {
       window.localStorage.setItem("theme", theme)
-    } catch {}
+    } catch { }
     onChange?.(theme)
   }, [theme, onChange])
 

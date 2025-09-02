@@ -104,36 +104,31 @@ export const PROJECTS = [
     desc: "The world's most popular search engine, delivering relevant results in milliseconds.",
     tech: "C++, Python, Bigtable",
     link: "https://www.google.com",
+    repo: "https://github.com/suryanavv",
   },
   {
     title: "Netflix Streaming",
     desc: "A global streaming platform offering movies, TV shows, and original content.",
     tech: "Java, Node.js, AWS",
     link: "https://www.netflix.com",
+    repo: "https://github.com/suryanavv",
   },
   {
     title: "Amazon Web Services",
     desc: "Comprehensive cloud computing services powering businesses worldwide.",
     tech: "Java, Go, DynamoDB",
     link: "https://aws.amazon.com",
+    repo: "https://github.com/suryanavv",
   },
 ]
 
 export const SOCIALS = [
   {
-    name: "Instagram",
-    link: "https://instagram.com/surya_naveen",
-  },
-  {
-    name: "Twitter",
-    link: "https://twitter.com/surya_naveen",
-  },
-  {
     name: "GitHub",
-    link: "https://github.com/surya-naveen",
+    link: "https://github.com/suryanavv",
   },
   {
     name: "LinkedIn",
-    link: "https://linkedin.com/in/surya-naveen",
+    link: "https://www.linkedin.com/in/surya-naveen-veeravalli-609976257/",
   },
 ]

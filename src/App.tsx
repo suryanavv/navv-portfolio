@@ -41,7 +41,7 @@ function App() {
             onChange={(t) => {
               try {
                 window.localStorage.setItem("theme", t)
-              } catch {}
+              } catch { }
               setTheme(t)
             }}
           />
@@ -133,9 +133,8 @@ function App() {
                   <img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
-                    className={`w-5 h-5 transition-transform group-hover:scale-110 ${
-                      skill.name === "GitHub" && theme === "dark" ? "brightness-0 invert" : ""
-                    }`}
+                    className={`w-5 h-5 transition-transform group-hover:scale-110 ${skill.name === "GitHub" && theme === "dark" ? "brightness-0 invert" : ""
+                      }`}
                     title={skill.name}
                   />
                   <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
@@ -171,14 +170,24 @@ function App() {
               <div key={index} className="border-b border-border pb-3 last:border-b-0 last:pb-0">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm text-foreground font-medium">{project.title}</h3>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-foreground hover:text-foreground/80 transition-colors"
-                  >
-                    Live ↗
-                  </a>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-foreground hover:text-foreground/80 transition-colors"
+                    >
+                      Repo ↗
+                    </a>
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-foreground hover:text-foreground/80 transition-colors"
+                    >
+                      Live ↗
+                    </a>
+                  </div>
                 </div>
                 <p className="text-xs text-muted mt-1">{project.desc}</p>
                 <p className="text-xs text-muted mt-1">Tech: {project.tech}</p>

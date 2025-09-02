@@ -67,12 +67,24 @@ const DynamicText = () => {
                             exit={textVariants.exit}
                             transition={{ duration: 0.3, ease: "easeOut" }}
                         >
-                            {greetings[currentIndex].text}
+                            {greetings[currentIndex].text}<img
+                                src="/namaste.png"
+                                alt="Namaste"
+                                className="w-10 h-10 select-none"
+                                aria-hidden="true"
+                                draggable={false}
+                            />
                         </motion.div>
                     </AnimatePresence>
                 ) : (
                     <div className="absolute flex items-center text-3xl font-medium text-primary">
-                        {greetings[currentIndex].text}
+                        {greetings[currentIndex].text}<img
+                            src="/namaste.png"
+                            alt="Namaste"
+                            className="w-10 h-10 select-none"
+                            aria-hidden="true"
+                            draggable={false}
+                        />
                     </div>
                 )}
             </div>
