@@ -9,15 +9,16 @@ interface Greeting {
 
 const greetings: Greeting[] = [
     { text: "Hello", language: "English" },
-    { text: "こんにちは", language: "Japanese" },
+    { text: "नमस्ते", language: "Hindi" }, // Namaste
+    { text: "నమస్కారం", language: "Telugu" }, // Namaskaram
+    { text: "こんにちは", language: "Japanese" }, // Konnichiwa
     { text: "Bonjour", language: "French" },
     { text: "Hola", language: "Spanish" },
-    { text: "안녕하세요", language: "Korean" },
+    { text: "안녕하세요", language: "Korean" }, // Annyeonghaseyo
     { text: "Ciao", language: "Italian" },
     { text: "Hallo", language: "German" },
     { text: "Hello", language: "English" },
 ];
-
 const DynamicText = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
@@ -37,7 +38,7 @@ const DynamicText = () => {
 
                 return nextIndex;
             });
-        }, 300);
+        }, 500);
 
         return () => clearInterval(interval);
     }, [isAnimating]);
@@ -59,18 +60,18 @@ const DynamicText = () => {
                     <AnimatePresence mode="popLayout">
                         <motion.div
                             key={currentIndex}
-                            className="absolute flex items-center text-3xl font-medium text-gray-800 dark:text-gray-200"
+                            className="absolute flex items-center text-3xl font-medium text-primary"
                             aria-live="off"
                             initial={textVariants.hidden}
                             animate={textVariants.visible}
                             exit={textVariants.exit}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
                         >
                             {greetings[currentIndex].text}
                         </motion.div>
                     </AnimatePresence>
                 ) : (
-                    <div className="absolute flex items-center text-3xl font-medium text-gray-800 dark:text-gray-200">
+                    <div className="absolute flex items-center text-3xl font-medium text-primary">
                         {greetings[currentIndex].text}
                     </div>
                 )}

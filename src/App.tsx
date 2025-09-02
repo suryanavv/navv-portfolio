@@ -4,146 +4,9 @@ import DynamicText from "./components/Greeting"
 import ThemeToggle from "./components/ThemeToggle"
 import "./App.css"
 import { useState, useEffect } from "react"
+import { SKILLS, PROJECTS, SOCIALS } from "./data"
 
-export const SKILLS = [
-  // Programming Languages
-  {
-    name: "JavaScript",
-    category: "Language",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-  },
-  {
-    name: "HTML",
-    category: "Language",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-  },
-  {
-    name: "CSS",
-    category: "Language",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-  },
-  {
-    name: "Python",
-    category: "Language",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-  },
-  {
-    name: "SQL",
-    category: "Language",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
-  },
 
-  // Frameworks & Libraries
-  {
-    name: "React",
-    category: "Framework",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-  },
-  {
-    name: "Next.js",
-    category: "Framework",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
-  },
-  {
-    name: "Tailwind CSS",
-    category: "Framework",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-  },
-
-  // Tools & Software
-  {
-    name: "Figma",
-    category: "Design Tool",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
-  },
-  {
-    name: "Canva",
-    category: "Design Tool",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/canva/canva-original.svg",
-  },
-  {
-    name: "VS Code",
-    category: "Editor",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg",
-  },
-  {
-    name: "Cursor",
-    category: "Editor",
-    logo: "https://cursor.com/assets/images/logo.svg",
-  },
-  {
-    name: "Docker",
-    category: "DevOps",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg",
-  },
-  {
-    name: "Git",
-    category: "Version Control",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
-  },
-  {
-    name: "GitHub",
-    category: "Version Control",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
-  },
-  {
-    name: "Postman",
-    category: "API Testing",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
-  },
-
-  // Databases
-  {
-    name: "MongoDB",
-    category: "Database",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
-  },
-  {
-    name: "PostgreSQL",
-    category: "Database",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
-  },
-]
-
-export const PROJECTS = [
-  {
-    title: "Portfolio Website",
-    desc: "A portfolio with subtle animation visual appealing interface",
-    tech: "Next.js, Tailwind CSS",
-    link: "https://portfolio-demo.vercel.app",
-  },
-  {
-    title: "Task Manager App",
-    desc: "Minimal todo tracker with real-time sync",
-    tech: "React, Firebase",
-    link: "https://taskmanager-app.vercel.app",
-  },
-  {
-    title: "Landing Page",
-    desc: "SaaS landing page with modern design",
-    tech: "HTML, Alpine.js",
-    link: "https://saas-landing-demo.netlify.app",
-  },
-]
-
-export const SOCIALS = [
-  {
-    name: "Instagram",
-    link: "https://instagram.com/surya_naveen",
-  },
-  {
-    name: "Twitter",
-    link: "https://twitter.com/surya_naveen",
-  },
-  {
-    name: "GitHub",
-    link: "https://github.com/surya-naveen",
-  },
-  {
-    name: "LinkedIn",
-    link: "https://linkedin.com/in/surya-naveen",
-  },
-]
 
 function App() {
   const [currentTime, setCurrentTime] = useState("")
@@ -170,19 +33,19 @@ function App() {
 
   return (
     <div className={`${theme === "dark" ? "dark" : ""} flex flex-col items-center bg-background`}>
-      <div className="fixed top-4 right-4 z-50">
-        <ThemeToggle
-          initial="dark"
-          onChange={(t) => {
-            try {
-              window.localStorage.setItem("theme", t)
-            } catch {}
-            setTheme(t)
-          }}
-        />
-      </div>
 
-      <div className="min-h-screen w-full max-w-3xl border-x px-5 pt-40 pb-6">
+      <div className="min-h-screen w-full max-w-3xl border-x px-5 pt-40 pb-6 relative">
+        <div className="absolute top-4 right-4 z-10">
+          <ThemeToggle
+            initial="dark"
+            onChange={(t) => {
+              try {
+                window.localStorage.setItem("theme", t)
+              } catch {}
+              setTheme(t)
+            }}
+          />
+        </div>
         <DynamicText />
 
         {/* Intro */}

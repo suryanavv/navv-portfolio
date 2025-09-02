@@ -30,7 +30,7 @@ export default function ThemeToggle({
       aria-label="Toggle theme"
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-      className="inline-flex items-center justify-center rounded-md border border-border bg-background/70 text-foreground hover:bg-secondary/40 transition-colors h-9 w-9"
+      className="inline-flex items-center justify-center rounded-md border border-border bg-background/70 text-foreground hover:bg-secondary/40 transition-colors w-8 h-8"
     >
       {/* Provided SVG (kept as-is) */}
       <svg
