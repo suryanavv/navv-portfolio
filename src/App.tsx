@@ -4,6 +4,7 @@ import DynamicText from "./components/Greeting"
 import ThemeToggle from "./components/ThemeToggle"
 import "./App.css"
 import { useState, useEffect } from "react"
+import { motion } from "motion/react"
 import { SKILLS, PROJECTS, SOCIALS } from "./data"
 
 
@@ -34,7 +35,12 @@ function App() {
   return (
     <div className={`${theme === "dark" ? "dark" : ""} flex flex-col items-center bg-background`}>
 
-      <div className="min-h-screen w-full max-w-3xl border-x px-6 pt-40 pb-6 relative">
+      <motion.div
+        className="min-h-screen w-full max-w-3xl border-x px-6 pt-40 pb-6 relative"
+        initial={{ opacity: 0, filter: "blur(10px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{ duration: 2, ease: "easeOut" }}
+      >
         <div className="absolute top-4 right-4 z-10">
           <ThemeToggle
             initial="dark"
@@ -49,16 +55,26 @@ function App() {
         <DynamicText />
 
         {/* Intro */}
-        <section className="mt-16 w-full text-2xl md:text-3xl text-muted">
+        <motion.section
+          className="mt-16 w-full text-2xl md:text-3xl text-muted"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.8 }}
+        >
           <p>
             I'm <span className="text-primary">Surya Naveen</span>, <br className="block md:hidden" />
             living in Andhra Pradesh, India.
             <br />I design and build minimal, accessible web interfaces.
           </p>
-        </section>
+        </motion.section>
 
         {/* Availability + Contact */}
-        <section className="mt-5 flex flex-col items-start gap-3">
+        <motion.section
+          className="mt-5 flex flex-col items-start gap-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 1.2 }}
+        >
           <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-foreground">
             <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
             Available for new opportunities
@@ -80,10 +96,15 @@ function App() {
             </svg>
             <span>Contact me</span>
           </button>
-        </section>
+        </motion.section>
 
         {/* Skills */}
-        <section className="mt-16">
+        <motion.section
+          className="mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 1.6 }}
+        >
           <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Skills</h2>
 
           {/* Programming Languages */}
@@ -160,10 +181,15 @@ function App() {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Projects */}
-        <section className="mt-16">
+        <motion.section
+          className="mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 2.0 }}
+        >
           <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Projects</h2>
           <div className="mt-6 space-y-6">
             {PROJECTS.map((project, index) => (
@@ -194,10 +220,15 @@ function App() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Socials */}
-        <section className="mt-16">
+        <motion.section
+          className="mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 2.4 }}
+        >
           <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Socials</h2>
           <div className="mt-4 space-y-3">
             {SOCIALS.map((social, index) => (
@@ -217,14 +248,19 @@ function App() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Footer */}
-        <div className="mt-16 flex items-center justify-between text-xs text-muted">
+        <motion.div
+          className="mt-16 flex items-center justify-between text-xs text-muted"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 2.8 }}
+        >
           <span>© {new Date().getFullYear()} Surya Naveen</span>
           <span className="font-mono">Local Time: {currentTime}</span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
 
 
