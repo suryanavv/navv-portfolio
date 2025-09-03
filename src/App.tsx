@@ -34,7 +34,7 @@ function App() {
   return (
     <div className={`${theme === "dark" ? "dark" : ""} flex flex-col items-center bg-background`}>
 
-      <div className="min-h-screen w-full max-w-3xl border-x px-5 pt-40 pb-6 relative">
+      <div className="min-h-screen w-full max-w-3xl border-x px-6 pt-40 pb-6 relative">
         <div className="absolute top-4 right-4 z-10">
           <ThemeToggle
             initial="dark"
@@ -49,7 +49,7 @@ function App() {
         <DynamicText />
 
         {/* Intro */}
-        <section className="pt-6 w-full text-2xl md:text-3xl text-muted">
+        <section className="mt-16 w-full text-2xl md:text-3xl text-muted">
           <p>
             I'm <span className="text-primary">Surya Naveen</span>, <br className="block md:hidden" />
             living in Andhra Pradesh, India.
@@ -83,8 +83,8 @@ function App() {
         </section>
 
         {/* Skills */}
-        <section className="mt-10">
-          <h2 className="text-md text-foreground">Skills</h2>
+        <section className="mt-16">
+          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Skills</h2>
 
           {/* Programming Languages */}
           <div className="mt-4">
@@ -95,7 +95,7 @@ function App() {
                   <img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
-                    className="w-6 h-6 transition-transform group-hover:scale-110"
+                    className="w-5 h-5 transition-transform group-hover:scale-110"
                     title={skill.name}
                   />
                   <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
@@ -113,7 +113,7 @@ function App() {
                   <img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
-                    className="w-6 h-6 transition-transform group-hover:scale-110"
+                    className="w-5 h-5 transition-transform group-hover:scale-110"
                     title={skill.name}
                   />
                   <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
@@ -152,7 +152,7 @@ function App() {
                   <img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
-                    className="w-6 h-6 transition-transform group-hover:scale-110"
+                    className="w-5 h-5 transition-transform group-hover:scale-110"
                     title={skill.name}
                   />
                   <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
@@ -163,9 +163,9 @@ function App() {
         </section>
 
         {/* Projects */}
-        <section className="mt-10">
-          <h2 className="text-md text-foreground">Projects</h2>
-          <div className="mt-4 space-y-3">
+        <section className="mt-16">
+          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Projects</h2>
+          <div className="mt-6 space-y-6">
             {PROJECTS.map((project, index) => (
               <div key={index} className="border-b border-border pb-3 last:border-b-0 last:pb-0">
                 <div className="flex items-center justify-between">
@@ -197,8 +197,8 @@ function App() {
         </section>
 
         {/* Socials */}
-        <section className="mt-10">
-          <h2 className="text-md text-foreground">Socials</h2>
+        <section className="mt-16">
+          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Socials</h2>
           <div className="mt-4 space-y-3">
             {SOCIALS.map((social, index) => (
               <div
@@ -220,12 +220,15 @@ function App() {
         </section>
 
         {/* Footer */}
-        <div className="mt-12 flex items-center justify-between text-xs text-muted">
+        <div className="mt-16 flex items-center justify-between text-xs text-muted">
           <span>© {new Date().getFullYear()} Surya Naveen</span>
           <span className="font-mono">Local Time: {currentTime}</span>
         </div>
       </div>
     </div>
+
+
+
   )
 }
 
