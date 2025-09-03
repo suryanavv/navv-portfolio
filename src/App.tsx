@@ -5,6 +5,7 @@ import ThemeToggle from "./components/ThemeToggle"
 import "./App.css"
 import { useState, useEffect } from "react"
 import { motion } from "motion/react"
+import type { Variants } from "motion/react"
 import { SKILLS, PROJECTS, SOCIALS } from "./data"
 
 
@@ -16,6 +17,25 @@ function App() {
     const saved = window.localStorage.getItem("theme")
     return saved === "light" || saved === "dark" ? (saved as "dark" | "light") : "dark"
   })
+
+  // Hover state for animated contact icon
+  const [isContactHover, setIsContactHover] = useState(false)
+
+  // Variants for the contact icon animation
+  const contactIconGroupVariants: Variants = {
+    initial: {
+      scale: 1,
+      x: 0,
+    },
+    hover: {
+      scale: [1, 0.8, 1, 1, 1],
+      x: [0, "-10%", "125%", "-150%", 0],
+      transition: {
+        default: { ease: "easeInOut", duration: 1.2 },
+        x: { ease: "easeInOut", duration: 1.2, times: [0, 0.25, 0.5, 0.5, 1] },
+      },
+    },
+  }
 
   useEffect(() => {
     const updateTime = () => {
@@ -75,27 +95,47 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.2 }}
         >
-          <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-foreground">
+          <motion.span
+            className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-foreground cursor-pointer"
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+              borderColor: "var(--primary)"
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          >
             <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
             Available for new opportunities
-          </span>
-          <button className="rounded-md border px-3 py-1.5 text-xs font-medium bg-foreground text-background hover:bg-foreground/80 cursor-pointer flex items-center gap-1.5">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
+          </motion.span>
+          <motion.button
+            className="rounded-md border px-3 py-1.5 text-xs font-medium bg-foreground text-background hover:bg-foreground/80 cursor-pointer flex items-center gap-1.5 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+            }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            onHoverStart={() => setIsContactHover(true)}
+            onHoverEnd={() => setIsContactHover(false)}
+          >
+            <motion.svg
+  className="w-4 h-4"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <motion.g variants={contactIconGroupVariants} initial="initial" animate={isContactHover ? "hover" : "initial"}>
+    <motion.path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+    />
+  </motion.g>
+</motion.svg>
             <span>Contact me</span>
-          </button>
+          </motion.button>
         </motion.section>
 
         {/* Skills */}
@@ -112,15 +152,32 @@ function App() {
             <h3 className="text-xs text-muted mb-2">Languages</h3>
             <div className="flex flex-wrap items-center gap-4">
               {SKILLS.filter((skill) => skill.category === "Language").map((skill, index) => (
-                <div key={index} className="flex items-center gap-2 group">
-                  <img
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-2 group cursor-pointer"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <motion.img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
                     className="w-5 h-5 transition-transform group-hover:scale-110"
                     title={skill.name}
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -10, 10, 0],
+                      filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+                    }}
+                    transition={{ duration: 0.3 }}
                   />
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
-                </div>
+                  <motion.span
+                    className="text-xs text-muted group-hover:text-foreground transition-colors"
+                    whileHover={{ color: "var(--foreground)" }}
+                  >
+                    {skill.name}
+                  </motion.span>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -130,15 +187,32 @@ function App() {
             <h3 className="text-xs text-muted mb-2">Frameworks & Libraries</h3>
             <div className="flex flex-wrap items-center gap-4">
               {SKILLS.filter((skill) => skill.category === "Framework").map((skill, index) => (
-                <div key={index} className="flex items-center gap-2 group">
-                  <img
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-2 group cursor-pointer"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <motion.img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
                     className="w-5 h-5 transition-transform group-hover:scale-110"
                     title={skill.name}
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -10, 10, 0],
+                      filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+                    }}
+                    transition={{ duration: 0.3 }}
                   />
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
-                </div>
+                  <motion.span
+                    className="text-xs text-muted group-hover:text-foreground transition-colors"
+                    whileHover={{ color: "var(--foreground)" }}
+                  >
+                    {skill.name}
+                  </motion.span>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -150,16 +224,33 @@ function App() {
               {SKILLS.filter((skill) =>
                 ["Design Tool", "Editor", "DevOps", "Version Control", "API Testing"].includes(skill.category),
               ).map((skill, index) => (
-                <div key={index} className="flex items-center gap-2 group">
-                  <img
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-2 group cursor-pointer"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <motion.img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
                     className={`w-5 h-5 transition-transform group-hover:scale-110 ${skill.name === "GitHub" && theme === "dark" ? "brightness-0 invert" : ""
                       }`}
                     title={skill.name}
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -10, 10, 0],
+                      filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+                    }}
+                    transition={{ duration: 0.3 }}
                   />
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
-                </div>
+                  <motion.span
+                    className="text-xs text-muted group-hover:text-foreground transition-colors"
+                    whileHover={{ color: "var(--foreground)" }}
+                  >
+                    {skill.name}
+                  </motion.span>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -169,15 +260,32 @@ function App() {
             <h3 className="text-xs text-muted mb-2">Databases</h3>
             <div className="flex flex-wrap items-center gap-4">
               {SKILLS.filter((skill) => skill.category === "Database").map((skill, index) => (
-                <div key={index} className="flex items-center gap-2 group">
-                  <img
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-2 group cursor-pointer"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <motion.img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
                     className="w-5 h-5 transition-transform group-hover:scale-110"
                     title={skill.name}
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -10, 10, 0],
+                      filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+                    }}
+                    transition={{ duration: 0.3 }}
                   />
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">{skill.name}</span>
-                </div>
+                  <motion.span
+                    className="text-xs text-muted group-hover:text-foreground transition-colors"
+                    whileHover={{ color: "var(--foreground)" }}
+                  >
+                    {skill.name}
+                  </motion.span>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -193,26 +301,75 @@ function App() {
           <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Projects</h2>
           <div className="mt-6 space-y-6">
             {PROJECTS.map((project, index) => (
-              <div key={index} className="border-b border-border pb-3 last:border-b-0 last:pb-0">
+              <div
+                key={index}
+                className="border-b border-border pb-3 last:border-b-0 last:pb-0"
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm text-foreground font-medium">{project.title}</h3>
                   <div className="flex items-center gap-3">
-                    <a
+                    <motion.a
                       href={project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-foreground hover:text-foreground/80 transition-colors"
+                      className="text-xs px-2 py-1 rounded-md bg-background/50 border border-border/50 hover:border-violet-500/50 transition-all duration-70 cursor-pointer"
+                      whileHover={{
+                        scale: 1.15,
+                        y: -3,
+                        rotate: -2,
+                        boxShadow: "0 8px 25px -5px rgba(139, 92, 246, 0.15), 0 4px 10px -2px rgba(139, 92, 246, 0.1)"
+                      }}
+                      whileTap={{
+                        scale: 0.9,
+                        rotate: 0,
+                        boxShadow: "0 2px 8px -2px rgba(139, 92, 246, 0.1)"
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 15,
+                        rotate: { duration: 0.2, ease: "easeOut" }
+                      }}
                     >
-                      Repo ↗
-                    </a>
-                    <a
+                      <motion.span
+                        className="text-foreground"
+                        whileHover={{ color: "#8b5cf6" }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        Repo ↗
+                      </motion.span>
+                    </motion.a>
+                    <motion.a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-foreground hover:text-foreground/80 transition-colors"
+                      className="text-xs px-2 py-1 rounded-md bg-background/50 border border-border/50 hover:border-green-500/50 transition-all duration-70 cursor-pointer"
+                      whileHover={{
+                        scale: 1.15,
+                        y: -3,
+                        rotate: 2,
+                        boxShadow: "0 8px 25px -5px rgba(34, 197, 94, 0.15), 0 4px 10px -2px rgba(34, 197, 94, 0.1)"
+                      }}
+                      whileTap={{
+                        scale: 0.9,
+                        rotate: 0,
+                        boxShadow: "0 2px 8px -2px rgba(34, 197, 94, 0.1)"
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 15,
+                        rotate: { duration: 0.2, ease: "easeOut" }
+                      }}
                     >
-                      Live ↗
-                    </a>
+                      <motion.span
+                        className="text-foreground"
+                        whileHover={{ color: "#22c55e" }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        Live ↗
+                      </motion.span>
+                    </motion.a>
                   </div>
                 </div>
                 <p className="text-xs text-muted mt-1">{project.desc}</p>
@@ -237,14 +394,37 @@ function App() {
                 className="flex items-center justify-between border-b border-border pb-3 last:border-b-0 last:pb-0"
               >
                 <h3 className="text-sm text-foreground font-medium">{social.name}</h3>
-                <a
+                <motion.a
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-foreground hover:text-foreground/80 transition-colors"
+                  className="text-xs px-3 py-1.5 rounded-md bg-background/50 border border-border/50 hover:border-blue-500/50 transition-all duration-70 cursor-pointer"
+                  whileHover={{
+                    scale: 1.12,
+                    y: -2,
+                    rotate: 1,
+                    boxShadow: "0 6px 20px -3px rgba(59, 130, 246, 0.15), 0 3px 8px -2px rgba(59, 130, 246, 0.1)"
+                  }}
+                  whileTap={{
+                    scale: 0.92,
+                    rotate: 0,
+                    boxShadow: "0 2px 6px -2px rgba(59, 130, 246, 0.1)"
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 450,
+                    damping: 12,
+                    rotate: { duration: 0.25, ease: "easeOut" }
+                  }}
                 >
-                  Follow ↗
-                </a>
+                  <motion.span
+                    className="text-foreground"
+                    whileHover={{ color: "#3b82f6" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Follow ↗
+                  </motion.span>
+                </motion.a>
               </div>
             ))}
           </div>
