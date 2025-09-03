@@ -57,9 +57,9 @@ function App() {
 
       <motion.div
         className="min-h-screen w-full max-w-3xl border-x px-6 pt-40 pb-6 relative"
-        initial={{ opacity: 0, filter: "blur(10px)" }}
+        initial={{ opacity: 0, filter: "blur(12px)" }}
         animate={{ opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 2, ease: "easeOut" }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
       >
         <div className="absolute top-4 right-4 z-10">
           <ThemeToggle
@@ -76,10 +76,10 @@ function App() {
 
         {/* Intro */}
         <motion.section
-          className="mt-16 w-full text-2xl md:text-3xl text-muted"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8 }}
+          className="mt-10 w-full text-2xl md:text-3xl text-muted"
+          initial={{ opacity: 0, filter: "blur(8px)", y: 10 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
         >
           <p>
             I'm <span className="text-primary">Surya Naveen</span>, <br className="block md:hidden" />
@@ -91,9 +91,9 @@ function App() {
         {/* Availability + Contact */}
         <motion.section
           className="mt-5 flex flex-col items-start gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 1.2 }}
+          initial={{ opacity: 0, filter: "blur(6px)", y: 8 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
         >
           <motion.span
             className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-foreground cursor-pointer"
@@ -119,21 +119,21 @@ function App() {
             onHoverEnd={() => setIsContactHover(false)}
           >
             <motion.svg
-  className="w-4 h-4"
-  fill="none"
-  stroke="currentColor"
-  viewBox="0 0 24 24"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <motion.g variants={contactIconGroupVariants} initial="initial" animate={isContactHover ? "hover" : "initial"}>
-    <motion.path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-    />
-  </motion.g>
-</motion.svg>
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <motion.g variants={contactIconGroupVariants} initial="initial" animate={isContactHover ? "hover" : "initial"}>
+                <motion.path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </motion.g>
+            </motion.svg>
             <span>Contact me</span>
           </motion.button>
         </motion.section>
@@ -141,20 +141,22 @@ function App() {
         {/* Skills */}
         <motion.section
           className="mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 1.6 }}
+          initial={{ opacity: 0, filter: "blur(6px)", y: 8 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
         >
-          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Skills</h2>
+          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-semibold text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Skills</h2>
 
+
+          
           {/* Programming Languages */}
-          <div className="mt-4">
-            <h3 className="text-xs text-muted mb-2">Languages</h3>
-            <div className="flex flex-wrap items-center gap-4">
+          <div className="mt-6">
+            <h3 className="text-sm font-medium text-muted mb-2">Languages</h3>
+            <div className="grid grid-cols-2 gap-3">
               {SKILLS.filter((skill) => skill.category === "Language").map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-center gap-2 group cursor-pointer"
+                  className="flex w-fit items-center gap-2 group cursor-pointer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -184,12 +186,12 @@ function App() {
 
           {/* Frameworks & Libraries */}
           <div className="mt-6">
-            <h3 className="text-xs text-muted mb-2">Frameworks & Libraries</h3>
-            <div className="flex flex-wrap items-center gap-4">
+            <h3 className="text-sm font-medium text-muted mb-2">Frameworks & Libraries</h3>
+            <div className="grid grid-cols-2 gap-3">
               {SKILLS.filter((skill) => skill.category === "Framework").map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-center gap-2 group cursor-pointer"
+                  className="flex w-fit items-center gap-2 group cursor-pointer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -219,14 +221,14 @@ function App() {
 
           {/* Tools & Software */}
           <div className="mt-6">
-            <h3 className="text-xs text-muted mb-2">Tools & Software</h3>
+            <h3 className="text-sm font-medium text-muted mb-2">Tools & Software</h3>
             <div className="grid grid-cols-2 gap-3">
               {SKILLS.filter((skill) =>
                 ["Design Tool", "Editor", "DevOps", "Version Control", "API Testing"].includes(skill.category),
               ).map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-center gap-2 group cursor-pointer"
+                  className="flex w-fit items-center gap-2 group cursor-pointer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -257,12 +259,12 @@ function App() {
 
           {/* Databases */}
           <div className="mt-6">
-            <h3 className="text-xs text-muted mb-2">Databases</h3>
-            <div className="flex flex-wrap items-center gap-4">
+            <h3 className="text-sm font-medium text-muted mb-2">Databases</h3>
+            <div className="grid grid-cols-2 gap-3">
               {SKILLS.filter((skill) => skill.category === "Database").map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-center gap-2 group cursor-pointer"
+                  className="flex w-fit items-center gap-2 group cursor-pointer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -294,11 +296,11 @@ function App() {
         {/* Projects */}
         <motion.section
           className="mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 2.0 }}
+          initial={{ opacity: 0, filter: "blur(6px)", y: 8 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
         >
-          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Projects</h2>
+          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-semibold text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Projects</h2>
           <div className="mt-6 space-y-6">
             {PROJECTS.map((project, index) => (
               <div
@@ -306,7 +308,7 @@ function App() {
                 className="border-b border-border pb-3 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm text-foreground font-medium">{project.title}</h3>
+                  <h3 className="text-md text-foreground font-semibold">{project.title}</h3>
                   <div className="flex items-center gap-3">
                     <motion.a
                       href={project.repo}
@@ -382,18 +384,18 @@ function App() {
         {/* Socials */}
         <motion.section
           className="mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 2.4 }}
+          initial={{ opacity: 0, filter: "blur(6px)", y: 8 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
         >
-          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-medium text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Socials</h2>
+          <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-semibold text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Socials</h2>
           <div className="mt-4 space-y-3">
             {SOCIALS.map((social, index) => (
               <div
                 key={index}
                 className="flex items-center justify-between border-b border-border pb-3 last:border-b-0 last:pb-0"
               >
-                <h3 className="text-sm text-foreground font-medium">{social.name}</h3>
+                <h3 className="text-sm text-foreground font-semibold">{social.name}</h3>
                 <motion.a
                   href={social.link}
                   target="_blank"
@@ -433,9 +435,9 @@ function App() {
         {/* Footer */}
         <motion.div
           className="mt-16 flex items-center justify-between text-xs text-muted"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 2.8 }}
+          initial={{ opacity: 0, filter: "blur(4px)", y: 5 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
         >
           <span>© {new Date().getFullYear()} Surya Naveen</span>
           <span className="font-mono">Local Time: {currentTime}</span>
