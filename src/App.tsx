@@ -107,7 +107,8 @@ function App() {
             <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
             Available for new opportunities
           </motion.span>
-          <motion.button
+          <motion.a
+            href="mailto:naveen534245@gmail.com"
             className="rounded-md border px-3 py-1.5 text-xs font-medium bg-foreground text-background hover:bg-foreground/80 cursor-pointer flex items-center gap-1.5 transition-all duration-300 hover:scale-105 hover:shadow-lg"
             whileHover={{
               scale: 1.05,
@@ -135,7 +136,7 @@ function App() {
               </motion.g>
             </motion.svg>
             <span>Contact me</span>
-          </motion.button>
+          </motion.a>
         </motion.section>
 
         {/* Skills */}
@@ -199,7 +200,8 @@ function App() {
                   <motion.img
                     src={skill.logo || "/placeholder.svg"}
                     alt={skill.name}
-                    className="w-5 h-5 transition-transform group-hover:scale-110"
+                    className={`w-5 h-5 transition-transform group-hover:scale-110 ${skill.name === "Shadcn UI" && theme === "dark" ? "brightness-0 invert" : ""
+                      }`}
                     title={skill.name}
                     whileHover={{
                       scale: 1.2,
@@ -301,43 +303,29 @@ function App() {
           transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
         >
           <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-semibold text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Projects</h2>
-          <div className="mt-6 space-y-6">
+
+          {/* Bento grid */}
+          <div className="mt-6 gap-4">
             {PROJECTS.map((project, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="border-b border-border pb-3 last:border-b-0 last:pb-0"
+                className="mt-6 rounded-xl border border-border/60 bg-background/50 p-4 flex flex-col gap-3"
+                whileHover={{ y: -3, scale: 1.01 }}
+                transition={{ type: "spring", stiffness: 300, damping: 18 }}
               >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-md text-foreground font-semibold">{project.title}</h3>
-                  <div className="flex items-center gap-3">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-md text-foreground font-semibold leading-6">{project.title}</h3>
+                  <div className="flex items-center gap-2 shrink-0">
                     <motion.a
                       href={project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs px-2 py-1 rounded-md bg-background/50 border border-border/50 hover:border-violet-500/50 transition-all duration-70 cursor-pointer"
-                      whileHover={{
-                        scale: 1.15,
-                        y: -3,
-                        rotate: -2,
-                        boxShadow: "0 8px 25px -5px rgba(139, 92, 246, 0.15), 0 4px 10px -2px rgba(139, 92, 246, 0.1)"
-                      }}
-                      whileTap={{
-                        scale: 0.9,
-                        rotate: 0,
-                        boxShadow: "0 2px 8px -2px rgba(139, 92, 246, 0.1)"
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 15,
-                        rotate: { duration: 0.2, ease: "easeOut" }
-                      }}
+                      whileHover={{ scale: 1.05, y: -1, rotate: -1 }}
+                      whileTap={{ scale: 0.96, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 14 }}
                     >
-                      <motion.span
-                        className="text-foreground"
-                        whileHover={{ color: "#8b5cf6" }}
-                        transition={{ duration: 0.2 }}
-                      >
+                      <motion.span className="text-foreground" whileHover={{ color: "#8b5cf6" }} transition={{ duration: 0.2 }}>
                         Repo ↗
                       </motion.span>
                     </motion.a>
@@ -346,37 +334,31 @@ function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs px-2 py-1 rounded-md bg-background/50 border border-border/50 hover:border-green-500/50 transition-all duration-70 cursor-pointer"
-                      whileHover={{
-                        scale: 1.15,
-                        y: -3,
-                        rotate: 2,
-                        boxShadow: "0 8px 25px -5px rgba(34, 197, 94, 0.15), 0 4px 10px -2px rgba(34, 197, 94, 0.1)"
-                      }}
-                      whileTap={{
-                        scale: 0.9,
-                        rotate: 0,
-                        boxShadow: "0 2px 8px -2px rgba(34, 197, 94, 0.1)"
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 15,
-                        rotate: { duration: 0.2, ease: "easeOut" }
-                      }}
+                      whileHover={{ scale: 1.05, y: -1, rotate: 1 }}
+                      whileTap={{ scale: 0.96, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 14 }}
                     >
-                      <motion.span
-                        className="text-foreground"
-                        whileHover={{ color: "#22c55e" }}
-                        transition={{ duration: 0.2 }}
-                      >
+                      <motion.span className="text-foreground" whileHover={{ color: "#22c55e" }} transition={{ duration: 0.2 }}>
                         Live ↗
                       </motion.span>
                     </motion.a>
                   </div>
                 </div>
-                <p className="text-xs text-muted mt-1">{project.desc}</p>
-                <p className="text-xs text-muted mt-1">Tech: {project.tech}</p>
-              </div>
+
+                <p className="text-xs text-muted">{project.desc}</p>
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {project.tech.split(',').map((tech, techIndex) => (
+                    <motion.span
+                      key={techIndex}
+                      className="inline-flex items-center px-2 py-1 rounded-md bg-transparent text-xs text-foreground border border-border/80 hover:bg-muted/20 hover:text-foreground transition-colors cursor-default"
+                      whileHover={{ scale: 1.05, y: -1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    >
+                      {tech.trim()}
+                    </motion.span>
+                  ))}
+                </div>
+              </motion.div>
             ))}
           </div>
         </motion.section>

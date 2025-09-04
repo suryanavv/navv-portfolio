@@ -42,6 +42,11 @@ export const SKILLS = [
     category: "Framework",
     logo: "/icons/tailwindcss.svg",
   },
+  {
+    name: "Shadcn UI",
+    category: "Framework",
+    logo: "/icons/shadcn.svg",
+  },
 
   // Tools & Software
   {
@@ -100,27 +105,30 @@ export const SKILLS = [
 
 export const PROJECTS = [
   {
-    title: "Google Search",
-    desc: "The world's most popular search engine, delivering relevant results in milliseconds.",
-    tech: "C++, Python, Bigtable",
-    link: "https://www.google.com",
-    repo: "https://github.com/suryanavv",
+    title: "BridgeSpace",
+    desc: "A file and text-sharing platform enabling seamless content transfer between devices on the same Wi-Fi network with real-time notifications.",
+    tech: "React, Supabase, TailwindCSS",
+    link: "https://bridgespace.vercel.app/",
+    repo: "https://github.com/suryanavv/BridgeSpace",
   },
   {
-    title: "Netflix Streaming",
-    desc: "A global streaming platform offering movies, TV shows, and original content.",
-    tech: "Java, Node.js, AWS",
-    link: "https://www.netflix.com",
-    repo: "https://github.com/suryanavv",
+    title: "FrameCaption",
+    desc: "A modern editor for creating text-behind-subject styled images and thumbnails. Features drag-and-drop editing, layer management, typography controls, and real-time previews.",
+    tech: "NextJS, React, TailwindCSS, Shadcn/ui",
+    link: "https://framecaption.vercel.app/",
+    repo: "https://github.com/suryanavv/FrameCaption",
   },
   {
-    title: "Amazon Web Services",
-    desc: "Comprehensive cloud computing services powering businesses worldwide.",
-    tech: "Java, Go, DynamoDB",
-    link: "https://aws.amazon.com",
-    repo: "https://github.com/suryanavv",
+    title: "Spotlight",
+    desc: "A portfolio showcase platform where users can create, customize, and manage their personal portfolios with project management tools and shareable profile links.",
+    tech: "React, Shadcn/ui, Supabase",
+    link: "https://spotlight-portfolios.vercel.app/",
+    repo: "https://github.com/suryanavv/spotlight",
   },
-]
+];
+
+
+
 
 export const SOCIALS = [
   {
