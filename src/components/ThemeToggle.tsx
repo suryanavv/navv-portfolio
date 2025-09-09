@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import { flushSync } from "react-dom"
 import { motion } from "motion/react"
 
 type Theme = "dark" | "light"
@@ -12,6 +13,7 @@ export default function ThemeToggle({
   onChange?: (theme: Theme) => void
   initial?: Theme
 }) {
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") return initial
     const stored = window.localStorage.getItem("theme") as Theme | null
@@ -21,16 +23,55 @@ export default function ThemeToggle({
   useEffect(() => {
     try {
       window.localStorage.setItem("theme", theme)
+      // Apply theme to document element
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
     } catch { }
     onChange?.(theme)
   }, [theme, onChange])
 
+  const handleThemeChange = async () => {
+    if (!buttonRef.current) return
+
+    await document.startViewTransition(() => {
+      flushSync(() => {
+        setTheme((t) => (t === "dark" ? "light" : "dark"))
+      })
+    }).ready
+
+    const { top, left, width, height } = buttonRef.current.getBoundingClientRect()
+    const y = top + height / 2
+    const x = left + width / 2
+
+    const right = window.innerWidth - left
+    const bottom = window.innerHeight - top
+    const maxRad = Math.hypot(Math.max(left, right), Math.max(top, bottom))
+
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${maxRad}px at ${x}px ${y}px)`,
+        ],
+      },
+      {
+        duration: 700,
+        easing: "ease-in-out",
+        pseudoElement: "::view-transition-new(root)",
+      }
+    )
+  }
+
   return (
     <motion.button
+      ref={buttonRef}
       type="button"
       aria-label="Toggle theme"
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-      onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+      onClick={handleThemeChange}
       className="inline-flex items-center justify-center rounded-md border border-border bg-background/70 text-foreground hover:bg-secondary/40 transition-all duration-70 w-8 h-8 cursor-pointer"
       whileHover={{
         scale: 1.1,

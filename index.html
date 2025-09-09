@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Dynamic favicon based on browser theme -->
 
     <!-- SEO Meta Tags -->
     <title>Surya Naveen</title>
@@ -49,6 +49,37 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://suryanavv.vercel.app" />
+
+    <!-- Dynamic Favicon Script -->
+    <script>
+      (function() {
+        function setFavicon() {
+          const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const faviconPath = isDarkMode ? '/favicon.svg' : '/favicon-dark.svg';
+
+          // Remove existing favicon link if it exists
+          const existingFavicon = document.querySelector('link[rel="icon"]');
+          if (existingFavicon) {
+            existingFavicon.remove();
+          }
+
+          // Create and append new favicon link
+          const link = document.createElement('link');
+          link.rel = 'icon';
+          link.type = 'image/svg+xml';
+          link.href = faviconPath;
+          document.head.appendChild(link);
+        }
+
+        // Set initial favicon
+        setFavicon();
+
+        // Listen for theme changes
+        if (window.matchMedia) {
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
