@@ -368,7 +368,7 @@ function App() {
           className="mt-16"
           initial={{ opacity: 0, filter: "blur(6px)", y: 8 }}
           animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 1.3, ease: "easeOut" }}
         >
           <h2 className="-mx-6 px-5 p-1 border-y border-border/50 text-lg font-semibold text-foreground [background-image:repeating-linear-gradient(135deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1.5px,transparent_1.5px,transparent_7px)] dark:[background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06)_0,rgba(255,255,255,0.06)_1.5px,transparent_1.5px,transparent_7px)]">Socials</h2>
           <div className="mt-4 space-y-3">
@@ -419,7 +419,7 @@ function App() {
           className="mt-16 flex items-center justify-between text-xs text-muted"
           initial={{ opacity: 0, filter: "blur(4px)", y: 5 }}
           animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-          transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 1.5, ease: "easeOut" }}
         >
           <span>© {new Date().getFullYear()} Surya Naveen</span>
           <span className="font-mono">Local Time: {currentTime}</span>
