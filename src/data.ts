@@ -1,105 +1,127 @@
+import {
+  Javascript,
+  Html5,
+  Css3,
+  Python,
+  Mysql,
+  ReactIcon,
+  Nextjs,
+  Tailwindcss,
+  Shadcn,
+  Figma,
+  Canva,
+  Vscode,
+  Cursor,
+  Docker,
+  Git,
+  Github,
+  Postman,
+  Mongodb,
+  Postgresql,
+} from './components/icons';
+
 export const SKILLS = [
   // Programming Languages
   {
     name: "JavaScript",
     category: "Language",
-    logo: "/icons/javascript.svg",
+    logo: Javascript,
   },
   {
     name: "HTML",
     category: "Language",
-    logo: "/icons/html5.svg",
+    logo: Html5,
   },
   {
     name: "CSS",
     category: "Language",
-    logo: "/icons/css3.svg",
+    logo: Css3,
   },
   {
     name: "Python",
     category: "Language",
-    logo: "/icons/python.svg",
+    logo: Python,
   },
   {
     name: "SQL",
     category: "Language",
-    logo: "/icons/mysql.svg",
+    logo: Mysql,
   },
 
   // Frameworks & Libraries
   {
     name: "React",
     category: "Framework",
-    logo: "/icons/react.svg",
+    logo: ReactIcon,
   },
   {
     name: "Next.js",
     category: "Framework",
-    logo: "/icons/nextjs.svg",
+    logo: Nextjs,
   },
   {
     name: "Tailwind CSS",
     category: "Framework",
-    logo: "/icons/tailwindcss.svg",
+    logo: Tailwindcss,
   },
   {
     name: "Shadcn UI",
     category: "Framework",
-    logo: "/icons/shadcn.svg",
+    logo: Shadcn,
   },
 
   // Tools & Software
   {
     name: "Figma",
     category: "Design Tool",
-    logo: "/icons/figma.svg",
+    logo: Figma,
   },
   {
     name: "Canva",
     category: "Design Tool",
-    logo: "/icons/canva.svg",
+    logo: Canva,
   },
   {
     name: "VS Code",
     category: "Editor",
-    logo: "/icons/vscode.svg",
+    logo: Vscode,
   },
   {
     name: "Cursor",
     category: "Editor",
-    logo: "/icons/cursor.svg",
+    logo: Cursor,
   },
   {
     name: "Docker",
     category: "DevOps",
-    logo: "/icons/docker.svg",
+    logo: Docker,
   },
   {
     name: "Git",
     category: "Version Control",
-    logo: "/icons/git.svg",
+    logo: Git,
   },
   {
     name: "GitHub",
     category: "Version Control",
-    logo: "/icons/github.svg",
+    logo: Github,
   },
   {
     name: "Postman",
     category: "API Testing",
-    logo: "/icons/postman.svg",
+    logo: Postman,
   },
 
   // Databases
   {
     name: "MongoDB",
     category: "Database",
-    logo: "/icons/mongodb.svg",
+    logo: Mongodb,
   },
   {
     name: "PostgreSQL",
     category: "Database",
-    logo: "/icons/postgresql.svg",
+    logo: Postgresql,
   },
 ]
 

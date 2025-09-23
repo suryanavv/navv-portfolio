@@ -3,26 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/image.png" />
+    <!-- Favicons: SVG for browser tabs; PNG only for homescreen installs -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: light)" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    <link rel="apple-touch-icon" href="/image.png" />
 
     <!-- SEO Meta Tags -->
     <title>Surya Naveen</title>
-    <meta name="description" content="Surya Naveen - Full-stack web developer from Andhra Pradesh, India. Specializing in React, TypeScript, and modern web technologies. Explore my projects and skills." />
-    <meta name="keywords" content="Surya Naveen, web developer, React, TypeScript, portfolio, full-stack developer, JavaScript, Next.js, Tailwind CSS" />
+    <meta name="description" content="Surya Naveen - web developer from Andhra Pradesh, India. Specializing in React, TypeScript, and modern web technologies. Explore my projects and skills." />
+    <meta name="keywords" content="Surya Naveen, web developer, React, TypeScript, portfolio, front-end developer, full-stack developer, JavaScript, Next.js, Tailwind CSS" />
     <meta name="author" content="Surya Naveen" />
+    <meta name="robots" content="index, follow" />
+    <meta name="color-scheme" content="light dark" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://suryanavv.vercel.app" />
+    <meta property="og:url" content="https://suryanavv.tech" />
     <meta property="og:title" content="Surya Naveen - Portfolio" />
-    <meta property="og:description" content="Full-stack web developer specializing in React, TypeScript, and modern web technologies." />
+    <meta property="og:description" content="web developer specializing in React, TypeScript, and modern web technologies." />
     <meta property="og:image" content="/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://suryanavv.vercel.app" />
+    <meta property="twitter:url" content="https://suryanavv.tech" />
     <meta property="twitter:title" content="Surya Naveen - Portfolio" />
-    <meta property="twitter:description" content="Full-stack web developer specializing in React, TypeScript, and modern web technologies." />
+    <meta property="twitter:description" content="web developer specializing in React, TypeScript, and modern web technologies." />
     <meta property="twitter:image" content="/og-image.png" />
     <meta property="twitter:image:alt" content="Surya Naveen - Portfolio" />
 
@@ -43,12 +49,13 @@
     <!-- WhatsApp -->
     <meta property="og:image:type" content="image/png" />
 
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#000000" />
+    <!-- Theme Color (respects light/dark preference) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
     <meta name="msapplication-TileColor" content="#000000" />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://suryanavv.vercel.app" />
+    <link rel="canonical" href="https://suryanavv.tech" />
   </head>
   <body>
     <div id="root"></div>
