@@ -1,9 +1,4 @@
-@font-face {
-  font-family: 'Manrope';
-  src: url('/Manrope-VariableFont_wght.ttf') format('truetype');
-  font-weight: 200 800;
-  font-display: swap;
-}
+@import url("https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,200..800;1,200..800&display=swap");
 
 @import "tailwindcss";
 
