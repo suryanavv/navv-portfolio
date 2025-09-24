@@ -366,11 +366,7 @@ function App() {
                     rotate: { duration: 0.25, ease: "easeOut" }
                   }}
                 >
-                  <motion.span
-                    className="text-foreground dark:text-white"
-                    whileHover={{ color: "#3b82f6" }}
-                    transition={{ duration: 0.2 }}
-                  >
+                  <motion.span className="text-foreground hover:text-[#3b82f6] transition-colors duration-200">
                     Follow ↗
                   </motion.span>
                 </motion.a>
