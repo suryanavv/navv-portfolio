@@ -57,10 +57,10 @@ function App() {
 
         {/* Intro */}
         <motion.section
-          className="mt-10 w-full text-2xl md:text-3xl text-muted"
+          className="mt-7 w-full text-2xl md:text-3xl text-muted"
         >
           <p>
-            I'm <span className="text-primary">Surya Naveen</span>, <br className="block md:hidden" />
+            I'm <span className="text-primary font-medium">Surya Naveen</span>, <br className="block md:hidden" />
             living in Andhra Pradesh,{" "}
             <span className="inline-flex items-center gap-1">
               India
@@ -367,7 +367,7 @@ function App() {
                   }}
                 >
                   <motion.span
-                    className="text-foreground"
+                    className="text-foreground dark:text-white"
                     whileHover={{ color: "#3b82f6" }}
                     transition={{ duration: 0.2 }}
                   >
