@@ -130,22 +130,34 @@ export const PROJECTS = [
     title: "BridgeSpace",
     desc: "A file and text-sharing platform enabling seamless content transfer between devices on the same Wi-Fi network with real-time notifications.",
     tech: "React, Supabase, TailwindCSS",
-    link: "https://bridgespace.vercel.app/",
+    link: "https://bridgespace.suryanavv.tech/",
     repo: "https://github.com/suryanavv/BridgeSpace",
+    links: [
+      "https://bridgespace.suryanavv.tech/",
+      "https://bridgespace.vercel.app/"
+    ]
   },
   {
     title: "FrameCaption",
     desc: "A modern editor for creating text-behind-subject styled images and thumbnails. Features drag-and-drop editing, layer management, typography controls, and real-time previews.",
     tech: "NextJS, React, TailwindCSS, Shadcn/ui",
-    link: "https://framecaption.vercel.app/",
+    link: "https://framecaption.suryanavv.tech/",
     repo: "https://github.com/suryanavv/FrameCaption",
+    links: [
+      "https://framecaption.suryanavv.tech/",
+      "https://framecaption.vercel.app/"
+    ]
   },
   {
     title: "Spotlight",
     desc: "A portfolio showcase platform where users can create, customize, and manage their personal portfolios with project management tools and shareable profile links.",
     tech: "React, Shadcn/ui, Supabase",
-    link: "https://spotlight-portfolios.vercel.app/",
+    link: "https://spotlight.suryanavv.tech/",
     repo: "https://github.com/suryanavv/spotlight",
+    links: [
+      "https://spotlight.suryanavv.tech/",
+      "https://spotlight-zeta.vercel.app/"
+    ]
   },
 ];
 
