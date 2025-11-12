@@ -60,7 +60,7 @@ function App() {
           className="mt-7 w-full text-2xl md:text-3xl text-muted"
         >
           <p>
-            I'm <span className="text-primary font-medium">Surya Naveen</span>, <br className="block md:hidden" />
+            I'm <h1 className="text-primary font-medium inline">Surya Naveen</h1>, <br className="block md:hidden" />
             living in Andhra Pradesh,{" "}
             <span className="inline-flex items-center gap-1">
               India
