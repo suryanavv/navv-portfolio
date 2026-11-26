@@ -121,89 +121,68 @@
   }
 
   /*
-    Skills: logo + name with no box. In the grid, hovering one lifts its logo and quietly dims
-    its neighbours. Inline (in the stack sentence), the name is set slightly heavier.
+    Skills: small chips (logo + name on a faint background, hairline border, 6px corners) under
+    small-caps <tag/> labels. Inline chips sit in the stack sentence.
   */
-  .skill-item {
+  .skill-label {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--muted) 80%, transparent);
+  }
+
+  .skill-chip {
     display: inline-flex;
     align-items: center;
+    gap: 0.4rem;
+    height: 1.5rem;
+    padding: 0 0.55rem 0 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    background: color-mix(in srgb, var(--secondary) 55%, transparent);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--foreground);
     transition:
-      color 150ms ease-out,
+      background-color 150ms ease-out,
+      border-color 150ms ease-out,
       opacity 200ms ease-out,
       translate 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .skill-item {
-    min-width: 0;
-    gap: 0.625rem;
-    font-size: 0.9375rem;
-    line-height: 1.5rem;
-  }
-
-  .skill-item .skill-logo {
-    flex: none;
-    width: 1.125rem;
-    height: 1.125rem;
-  }
-
-  /*
-    In the sentence a skill is ordinary inline text: no flex box, no extra margins, so spacing
-    and commas fall exactly as typed and copying the sentence gives plain text. The logo sits
-    on the text's centre line; logo and name never break apart.
-  */
-  .skill-inline {
-    display: inline;
-    white-space: nowrap;
-    font-weight: 500;
-    color: var(--foreground);
-    transition:
-      color 150ms ease-out,
-      opacity 200ms ease-out;
-  }
-
-  .skill-inline .skill-logo {
-    width: 0.95em;
-    height: 0.95em;
-    margin-right: 0.3em;
-    vertical-align: -0.12em;
-  }
-
-  .skill-item .skill-logo,
-  .skill-inline .skill-logo {
-    transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  .skill-chip-inline {
+    margin-inline: 0.25rem;
+    vertical-align: middle;
   }
 
   @media (hover: hover) {
-    .skill-item:hover .skill-logo,
-    .skill-inline:hover .skill-logo {
-      transform: translateY(-1px) scale(1.15);
-    }
-
-    /* Spotlight: hovering one skill in a group dims the others. */
-    .skill-row:has(.skill-item:hover) .skill-item:not(:hover) {
-      opacity: 0.45;
+    .skill-chip:hover {
+      background: var(--secondary);
+      border-color: color-mix(in srgb, var(--foreground) 22%, transparent);
     }
   }
 
-  /* First view: skills switch on one after another, a few milliseconds apart. */
+  /* First view: chips switch on one after another, a few milliseconds apart. */
   @media (prefers-reduced-motion: no-preference) {
-    .skills[data-seen="false"] :is(.skill-item, .skill-inline) {
+    .skills[data-seen="false"] .skill-chip {
       opacity: 0;
       translate: 0 4px;
     }
 
-    .skills[data-seen="true"] :is(.skill-item, .skill-inline) {
-      transition-delay: 0ms, min(calc(var(--i, 0) * 14ms), 700ms), min(calc(var(--i, 0) * 14ms), 700ms);
+    .skills[data-seen="true"] .skill-chip {
+      transition-delay: 0ms, 0ms, min(calc(var(--i, 0) * 14ms), 700ms), min(calc(var(--i, 0) * 14ms), 700ms);
     }
 
-    .skill-row:has(.skill-item:hover) .skill-item {
+    .skills[data-seen="true"] .skill-chip:hover {
       transition-delay: 0ms;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :is(.skill-item, .skill-inline),
-    :is(.skill-item, .skill-inline) .skill-logo {
+    .skill-chip {
       transition: none;
     }
   }

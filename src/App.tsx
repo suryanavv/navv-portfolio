@@ -63,7 +63,7 @@ function App() {
             <ProjectList projects={PROJECTS} />
           </Section>
 
-          <Section id="skills" title="Skills">
+          <Section id="skills" title="Skills" note="What I work with">
             <Skills />
           </Section>
 

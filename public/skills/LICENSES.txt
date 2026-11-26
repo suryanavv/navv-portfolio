@@ -11,6 +11,4 @@ Skill logos and glyphs in this folder:
 - Docker: current mark from docker.com (app/uploads/brand/logo/docker-mark-ether.svg) — docker
 - Lucide (ISC): https://github.com/lucide-icons/lucide
   sql, sqlalchemy, cicd, systemdesign, microservices, jobs, integrations, auth and the expertise glyphs
-mono/ (single-colour marks for the stack sentence): react, typescript, fastapi, postgresql from Simple Icons;
-  aws from Lobe Icons (aws.svg); docker and elevenlabs as above.
 Brand logos are trademarks of their owners and are used here only to name the tools.

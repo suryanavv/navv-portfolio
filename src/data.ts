@@ -111,13 +111,15 @@ export const STACK_SENTENCE: (string | Skill)[] = [
 ]
 
 // Technical skills, grouped by where they sit in the stack.
-export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
+export const SKILL_GROUPS: { area: string; tag: string; skills: Skill[] }[] = [
   {
     area: "Languages",
+    tag: "languages",
     skills: [S("python", "Python"), S("typescript", "TypeScript"), S("javascript", "JavaScript"), S("sql", "SQL")],
   },
   {
     area: "Frontend",
+    tag: "frontend",
     skills: [
       S("react", "React"),
       S("nextjs", "Next.js"),
@@ -129,6 +131,7 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   },
   {
     area: "Backend and databases",
+    tag: "backend",
     skills: [
       S("fastapi", "FastAPI"),
       S("pydantic", "Pydantic"),
@@ -141,18 +144,22 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   },
   {
     area: "Cloud",
+    tag: "cloud",
     skills: [S("aws", "AWS"), S("ec2", "EC2"), S("ecs", "ECS"), S("s3", "S3"), S("lambda", "Lambda"), S("vercel", "Vercel"), S("cloudflare", "Cloudflare")],
   },
   {
     area: "DevOps",
+    tag: "devops",
     skills: [S("docker", "Docker"), S("cicd", "CI/CD"), S("git", "Git"), S("github", "GitHub")],
   },
   {
     area: "AI",
+    tag: "ai",
     skills: [S("openai", "OpenAI"), S("elevenlabs", "ElevenLabs"), S("mcp", "MCP")],
   },
   {
     area: "Architecture",
+    tag: "architecture",
     skills: [
       S("systemdesign", "System design"),
       S("microservices", "Microservices"),
@@ -163,6 +170,7 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   },
   {
     area: "Tools",
+    tag: "tools",
     skills: [S("vscode", "VS Code"), S("cursor", "Cursor"), S("postman", "Postman"), S("figma", "Figma")],
   },
 ]

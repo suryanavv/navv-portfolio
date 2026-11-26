@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react"
-import { SkillLogo } from "./SkillItem"
+import { SkillLogo } from "./SkillChip"
 import { useSeenOnce } from "../../hooks/useSeenOnce"
 import { EXPERTISE } from "../../data"
 
