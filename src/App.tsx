@@ -34,7 +34,7 @@ function App() {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
                 href={`mailto:${PROFILE.email}`}
-                className="rounded-sm bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-85"
+                className="rounded-sm bg-foreground px-4 py-2 text-sm font-medium text-background transition-[opacity,scale] duration-150 hover:opacity-85 active:scale-[0.97] motion-reduce:active:scale-100"
               >
                 Email me
               </a>

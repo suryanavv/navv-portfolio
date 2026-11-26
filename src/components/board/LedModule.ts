@@ -53,13 +53,19 @@ export class LedModule {
     this.fill(this.glint, LED_COLORS.glint)
   }
 
-  /** Draws lit dots. `cell` decides each dot; defaults to reading `bitmap`. */
-  draw(bitmap: Bitmap | null, cell?: (x: number, y: number) => boolean) {
+  /**
+   * Draws lit dots. `cell` decides each dot; defaults to reading `bitmap`.
+   * The glow is baked in with one canvas shadow pass (a CSS filter would re-run on every
+   * repaint). Animation frames pass `glow = false`: cheaper, and LEDs warming up don't bloom yet.
+   */
+  draw(bitmap: Bitmap | null, cell?: (x: number, y: number) => boolean, glow = true) {
     const ctx = this.lit.getContext("2d")!
     const dpr = this.dpr()
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, this.lit.width, this.lit.height)
     ctx.fillStyle = LED_COLORS.lit
+    ctx.shadowColor = glow ? "rgb(94 234 140 / 0.55)" : "transparent"
+    ctx.shadowBlur = glow ? Math.max(3, this.pitch * 0.9) * dpr : 0
     const p = this.pitch * dpr
     const r = p * DOT_RATIO
     ctx.beginPath()

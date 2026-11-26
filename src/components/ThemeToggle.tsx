@@ -86,7 +86,8 @@ export default function ThemeToggle() {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="size-4"
+        className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none"
+        style={{ transform: `rotate(${theme === "dark" ? 0 : 180}deg)` }}
         aria-hidden="true"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

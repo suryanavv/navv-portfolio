@@ -1,21 +1,64 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { PROFILE, WORK, PROJECTS, TOOLKIT, LINKS } from './src/data'
 
 // The one place the site's address lives. index.html uses %SITE_URL%; robots.txt and sitemap.xml are generated.
 const SITE_URL = 'https://suryanavv.in'
 const BUILD_DATE = new Date().toISOString().slice(0, 10)
 
+// A plain-text summary for AI agents and LLM crawlers, built from the same content as the page.
+function llmsTxt() {
+  const work = WORK.map((j) => `- ${j.role} at ${j.company} (${j.start} – ${j.end ?? 'present'}): ${j.summary}`)
+  const projects = PROJECTS.map((p) => `- [${p.title}](${p.live}): ${p.summary}. Source: ${p.repo}`)
+  const toolkit = TOOLKIT.map((t) => `- ${t.area}: ${t.items}`)
+  const links = [`- Email: ${PROFILE.email}`, ...LINKS.map((l) => `- [${l.label}](${l.href})`)]
+  return [
+    `# ${PROFILE.name}`,
+    '',
+    `> ${PROFILE.role} in ${PROFILE.place}.${PROFILE.available ? ' Available for work.' : ''}`,
+    '',
+    ...PROFILE.intro,
+    '',
+    '## Work',
+    ...work,
+    '',
+    '## Projects',
+    ...projects,
+    '',
+    '## Toolkit',
+    ...toolkit,
+    '',
+    '## Contact',
+    ...links,
+    '',
+  ].join('\n')
+}
+
 function site(): Plugin {
   return {
     name: 'site-url',
-    transformIndexHtml: (html) => html.replaceAll('%SITE_URL%', SITE_URL),
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        html = html.replaceAll('%SITE_URL%', SITE_URL)
+        // Inline the (small) stylesheet so it doesn't block the first render with an extra request.
+        if (ctx.bundle) {
+          html = html.replace(/<link rel="stylesheet"[^>]*href="\/(assets\/[^"]+\.css)"[^>]*>/g, (tag, file) => {
+            const asset = ctx.bundle?.[file]
+            return asset && asset.type === 'asset' ? `<style>${String(asset.source)}</style>` : tag
+          })
+        }
+        return html
+      },
+    },
     generateBundle() {
       this.emitFile({
         type: 'asset',
         fileName: 'robots.txt',
         source: `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`,
       })
+      this.emitFile({ type: 'asset', fileName: 'llms.txt', source: llmsTxt() })
       this.emitFile({
         type: 'asset',
         fileName: 'sitemap.xml',

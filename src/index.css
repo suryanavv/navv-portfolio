@@ -95,6 +95,49 @@
       transition: none;
     }
   }
+
+  /*
+    Section titles switch on like a row of LEDs: dim until first seen, then lit left to right
+    in hard steps (LEDs switch, they don't fade). The mask is twice as wide as the title:
+    its left half is fully opaque, its right half is "unlit".
+  */
+  @media (prefers-reduced-motion: no-preference) {
+    .led-title {
+      -webkit-mask-image: linear-gradient(to right, #000 50%, rgb(0 0 0 / 0.16) 50%);
+      mask-image: linear-gradient(to right, #000 50%, rgb(0 0 0 / 0.16) 50%);
+      -webkit-mask-size: 200% 100%;
+      mask-size: 200% 100%;
+      -webkit-mask-position: 100% 0;
+      mask-position: 100% 0;
+      transition:
+        -webkit-mask-position 480ms steps(12, end),
+        mask-position 480ms steps(12, end);
+    }
+
+    .led-title[data-lit="true"] {
+      -webkit-mask-position: 0 0;
+      mask-position: 0 0;
+    }
+  }
+
+  /* The "on" lamp breathes slowly, like a status LED. */
+  @media (prefers-reduced-motion: no-preference) {
+    .lamp-breathe {
+      animation: lamp-breathe 2.8s ease-in-out infinite;
+    }
+  }
+
+  @keyframes lamp-breathe {
+    0%,
+    100% {
+      box-shadow: 0 0 6px var(--lamp);
+    }
+    50% {
+      box-shadow:
+        0 0 2px var(--lamp),
+        0 0 12px var(--lamp);
+    }
+  }
 }
 
 

@@ -210,6 +210,18 @@ Each one either answers something the visitor did or is the single load moment.
 | 12 | Keyboard | `h` `w` `p` `c` jump to sections; `t` toggles the theme. A hint appears in the dock when it has keyboard focus | none | Same |
 | 13 | Focus (keyboard) | 2px outline in Ink (not green: green means "on") | none | Same |
 
+**Added after the first build (26 Nov 2026)**, each tied to the LED/board language or to a visitor action:
+
+| Trigger | What happens | Reduced motion |
+|---|---|---|
+| Section title first scrolls into view | Title switches on left to right in 12 hard steps, from a dim "unlit" state | Shown lit, no mask |
+| Work list first seen | Route line draws down from the top stop; the current role's lamp breathes slowly | Line shown, no breathing |
+| Hover a closed project row (mouse) | A 288px screenshot preview follows the pointer, flipping to stay on screen | Shown, no scale/fade |
+| Scroll down / up | Dock tucks away while reading down, returns on any upward scroll, near the ends, on focus, and never hides during its own jumps | Instant |
+| Theme toggle | Icon turns half a turn | No turn |
+| Board clock on narrow screens (no seconds) | Colon blinks each second, like a station clock | Steady colon |
+| Press "Email me" or a dock item | Scales down slightly | No scale |
+
 **Deliberately left out**, and why:
 - No fade-up on each section as it scrolls in. The board boot is the one moment; repeating it everywhere dilutes it.
 - No custom cursor, no magnetic buttons, no tilt cards.

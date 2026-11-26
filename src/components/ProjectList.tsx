@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react"
 import { AnimatePresence, m, useReducedMotion } from "motion/react"
 import Lamp from "./Lamp"
 import type { Project } from "../data"
@@ -34,16 +34,80 @@ export default function ProjectList({ projects }: { projects: Project[] }) {
     })
   }
 
+  // Desktop hover preview: a small screenshot that follows the pointer over closed rows.
+  const [preview, setPreview] = useState<Project | null>(null)
+  const previewRef = useRef<HTMLDivElement>(null)
+  const canHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches
+
+  const place = (event: ReactPointerEvent) => {
+    const el = previewRef.current
+    if (!el) return
+    const w = el.offsetWidth
+    const h = el.offsetHeight
+    // Sit below-right of the pointer, flipping to stay inside the viewport.
+    const x = event.clientX + 24 + w > window.innerWidth ? event.clientX - 24 - w : event.clientX + 24
+    const y = event.clientY + 20 + h > window.innerHeight ? event.clientY - 20 - h : event.clientY + 20
+    el.style.translate = `${x}px ${y}px`
+  }
+
+  const hoverHandlers = (project: Project) => ({
+    onPointerEnter: (event: ReactPointerEvent) => {
+      if (event.pointerType !== "mouse" || open.has(project.slug) || !canHover()) return
+      setPreview(project)
+      place(event)
+    },
+    onPointerMove: (event: ReactPointerEvent) => {
+      if (preview?.slug === project.slug) place(event)
+    },
+    onPointerLeave: () => setPreview(null),
+    onClick: () => setPreview(null),
+  })
+
   return (
-    <ul className="border-t border-border">
-      {projects.map((project) => (
-        <ProjectRow key={project.slug} project={project} open={open.has(project.slug)} onToggle={() => toggle(project.slug)} />
-      ))}
-    </ul>
+    <>
+      <ul className="border-t border-border">
+        {projects.map((project) => (
+          <ProjectRow
+            key={project.slug}
+            project={project}
+            open={open.has(project.slug)}
+            onToggle={() => toggle(project.slug)}
+            hover={hoverHandlers(project)}
+          />
+        ))}
+      </ul>
+      <div
+        ref={previewRef}
+        aria-hidden="true"
+        data-visible={!!preview}
+        className="pointer-events-none fixed top-0 left-0 z-40 w-72 origin-top-left scale-95 overflow-hidden rounded-sm border border-border bg-secondary opacity-0 shadow-xl shadow-black/20 transition-[opacity,scale] duration-150 ease-out data-[visible=true]:scale-100 data-[visible=true]:opacity-100 motion-reduce:transition-none"
+      >
+        {preview && (
+          <img src={`${preview.image}-800.webp`} alt="" width={800} height={500} className="aspect-[16/10] w-full object-cover object-top" />
+        )}
+      </div>
+    </>
   )
 }
 
-function ProjectRow({ project, open, onToggle }: { project: Project; open: boolean; onToggle: () => void }) {
+type HoverHandlers = {
+  onPointerEnter: (event: ReactPointerEvent) => void
+  onPointerMove: (event: ReactPointerEvent) => void
+  onPointerLeave: () => void
+  onClick: () => void
+}
+
+function ProjectRow({
+  project,
+  open,
+  onToggle,
+  hover,
+}: {
+  project: Project
+  open: boolean
+  onToggle: () => void
+  hover: HoverHandlers
+}) {
   const reduceMotion = useReducedMotion()
   const panelId = `project-${project.slug}-details`
   const buttonId = `project-${project.slug}-title`
@@ -56,7 +120,13 @@ function ProjectRow({ project, open, onToggle }: { project: Project; open: boole
           type="button"
           aria-expanded={open}
           aria-controls={panelId}
-          onClick={onToggle}
+          onClick={() => {
+            hover.onClick()
+            onToggle()
+          }}
+          onPointerEnter={hover.onPointerEnter}
+          onPointerMove={hover.onPointerMove}
+          onPointerLeave={hover.onPointerLeave}
           className="group flex w-full cursor-pointer items-start gap-3 py-4 text-left sm:items-center"
         >
           <Lamp label="Live site" className="mt-2 sm:mt-0" />

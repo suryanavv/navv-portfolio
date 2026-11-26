@@ -18,10 +18,6 @@
   pointer-events: none;
 }
 
-/* Lit LEDs bleed a little light. */
-.led-lit {
-  filter: drop-shadow(0 0 1.5px rgb(94 234 140 / 0.6)) drop-shadow(0 0 7px rgb(94 234 140 / 0.22));
-}
 
 /* Unlit dots near the pointer catch a little light. Revealed with a mask; no redraw. */
 .led-glint {

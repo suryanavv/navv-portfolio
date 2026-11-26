@@ -18,6 +18,7 @@ const EDGE_PX = 14 // left/right inset, kept equal across modules with different
 const CYCLE_MS = 4000
 const WIPE_MS = 300
 const BOOT_MS = 900
+const FRAME_MS = 32
 const BOOT_BAND = 8 // columns of "warming up" noise at the boot frontier
 const BOOT_KEY = "board-booted"
 const STATUS_GAP = 3 // empty LEDs between the lamp and "Available"
@@ -87,6 +88,9 @@ export default function Board({ name, role, place, available, className = "" }: 
     let wipeStart = -1
     let bootStart = -1
     let raf = 0
+    let lastFrame = 0
+    let bootTargets: Bitmap[] | null = null
+    let wipeTargets: Bitmap[] | null = null
     let cycleTimer = 0
     let clockTimer = 0
     let captionTimer = 0
@@ -101,7 +105,10 @@ export default function Board({ name, role, place, available, className = "" }: 
     const composeA = (index: number | null): Bitmap => {
       const bmp = blank(modA.cols, modA.rows)
       if (index !== null) blit(bmp, GREETING_BITMAPS[index], padA, PAD)
-      const clock = dotoText(istTime(showSeconds))
+      // Without seconds (narrow boards) the colon blinks each second, as station clocks do.
+      const time = istTime(showSeconds)
+      const blinkOff = !showSeconds && !reduceMotion && new Date().getSeconds() % 2 === 1
+      const clock = dotoText(blinkOff ? time.replace(":", " ") : time)
       blit(bmp, clock, modA.cols - padA - clock.w, PAD + GREETING_BASELINE_ROW - (DOTO_CAP_ROWS - 1))
       return bmp
     }
@@ -195,44 +202,59 @@ export default function Board({ name, role, place, available, className = "" }: 
       if (destroyed) return
       let again = false
 
+      // LED boards refresh in steps, so ~30fps is both truer to the object and half the work.
+      if (now - lastFrame < FRAME_MS && (bootStart >= 0 || wipeStart >= 0)) {
+        raf = requestAnimationFrame(tick)
+        return
+      }
+      lastFrame = now
+
       if (bootStart >= 0) {
         const t = Math.min(1, (now - bootStart) / BOOT_MS)
         const shimmer = Math.floor(now / 45)
-        for (const [mod, bmp] of [
-          [modA, composeA(greeting)],
-          [modB, composeB()],
-          [modC, composeC()],
-        ] as const) {
+        if (!bootTargets) bootTargets = [composeA(greeting), composeB(), composeC()]
+        const mods = [modA, modB, modC]
+        mods.forEach((mod, i) => {
+          const bmp = bootTargets![i]
           const front = t * (mod.cols + BOOT_BAND)
-          mod.draw(null, (x, y) => {
-            if (x < front - BOOT_BAND) return bmp.data[y * bmp.w + x] === 1
-            if (x < front) return y >= PAD && y < mod.rows - PAD && noise(x, y, shimmer) < 0.28
-            return false
-          })
-        }
+          mod.draw(
+            null,
+            (x, y) => {
+              if (x < front - BOOT_BAND) return bmp.data[y * bmp.w + x] === 1
+              if (x < front) return y >= PAD && y < mod.rows - PAD && noise(x, y, shimmer) < 0.28
+              return false
+            },
+            false,
+          )
+        })
         if (t < 1) again = true
         else {
           bootStart = -1
+          bootTargets = null
           drawStatic()
         }
       } else if (wipeStart >= 0) {
         const t = Math.min(1, (now - wipeStart) / WIPE_MS)
         const region = padA + GREETING_MAX_W + 1
-        const from = composeA(previous)
-        const to = composeA(greeting)
-        const clockOnly = composeA(null)
+        if (!wipeTargets) wipeTargets = [composeA(previous), composeA(greeting), composeA(null)]
+        const [from, to, clockOnly] = wipeTargets
         const phaseIn = t >= 0.5
         // Columns switch off left to right, then the new text switches on left to right.
         const k = Math.floor((phaseIn ? (t - 0.5) * 2 : t * 2) * region)
-        modA.draw(null, (x, y) => {
-          const i = y * to.w + x
-          if (x >= region) return clockOnly.data[i] === 1
-          if (!phaseIn) return x < k ? false : from.data[i] === 1
-          return x < k ? to.data[i] === 1 : false
-        })
+        modA.draw(
+          null,
+          (x, y) => {
+            const i = y * to.w + x
+            if (x >= region) return clockOnly.data[i] === 1
+            if (!phaseIn) return x < k ? false : from.data[i] === 1
+            return x < k ? to.data[i] === 1 : false
+          },
+          false,
+        )
         if (t < 1) again = true
         else {
           wipeStart = -1
+          wipeTargets = null
           modA.draw(composeA(greeting))
         }
       }
@@ -270,6 +292,7 @@ export default function Board({ name, role, place, available, className = "" }: 
         modA.draw(composeA(greeting))
       } else {
         wipeStart = performance.now()
+        wipeTargets = null
         animate()
       }
       schedule()

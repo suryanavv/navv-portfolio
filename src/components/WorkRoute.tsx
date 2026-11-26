@@ -1,19 +1,28 @@
 import Lamp from "./Lamp"
+import { useSeenOnce } from "../hooks/useSeenOnce"
 import type { Job } from "../data"
 
 // Work history as a vertical route. The current role's stop is the lit one.
+// The route line draws itself down from the top stop the first time the list is seen.
 export default function WorkRoute({ jobs }: { jobs: Job[] }) {
+  const [ref, seen] = useSeenOnce<HTMLOListElement>(0.3)
   return (
-    <ol>
+    <ol ref={ref}>
       {jobs.map((job, i) => {
         const current = !job.end
         const last = i === jobs.length - 1
         return (
           <li key={`${job.company}-${i}`} className="relative grid grid-cols-[0.5rem_1fr] gap-x-5 pb-9 last:pb-0">
             <div className="relative flex justify-center pt-[0.5rem]">
-              {!last && <span aria-hidden="true" className="absolute top-[1.1rem] -bottom-[0.6rem] w-px bg-border" />}
+              {!last && (
+                <span
+                  aria-hidden="true"
+                  className="absolute top-[1.1rem] -bottom-[0.6rem] w-px origin-top bg-border transition-transform duration-700 ease-out motion-reduce:transition-none"
+                  style={{ transform: `scaleY(${seen ? 1 : 0})`, transitionDelay: `${i * 160}ms` }}
+                />
+              )}
               {current ? (
-                <Lamp label="Current role" className="relative" />
+                <Lamp label="Current role" breathe className="relative" />
               ) : (
                 <span aria-hidden="true" className="relative size-2 rounded-full border border-muted bg-background" />
               )}
