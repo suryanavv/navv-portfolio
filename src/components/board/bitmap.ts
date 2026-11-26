@@ -103,3 +103,8 @@ export function dotoText(text: string): Bitmap {
 }
 
 export const DOTO_CAP_ROWS = CAP_ROWS
+
+/** Width in LEDs of `text` set in Doto. Doto is a fixed grid, so this needs no font and no canvas. */
+export function dotoWidth(text: string): number {
+  return Math.max(0, text.length * ADVANCE - 1)
+}

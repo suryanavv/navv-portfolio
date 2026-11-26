@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import { GREETINGS, GREETING_ROWS } from "./glyphs"
-import { blank, blit, dotoText, fromRows, hjoin, LAMP, DOTO_CAP_ROWS, type Bitmap } from "./bitmap"
+import { blank, blit, dotoText, dotoWidth, fromRows, hjoin, LAMP, DOTO_CAP_ROWS, type Bitmap } from "./bitmap"
 import { LedModule } from "./LedModule"
 import "./board.css"
 
@@ -20,6 +20,7 @@ const WIPE_MS = 300
 const BOOT_MS = 900
 const BOOT_BAND = 8 // columns of "warming up" noise at the boot frontier
 const BOOT_KEY = "board-booted"
+const STATUS_GAP = 3 // empty LEDs between the lamp and "Available"
 const NAME_MAX_PITCH = 10 // px per LED for the name on wide screens
 const NAME_MIN_ONE_LINE_PITCH = 6 // below this, the name breaks onto two lines
 const NAME_MAX_PITCH_STACKED = 7
@@ -66,7 +67,9 @@ export default function Board({ name, role, place, available, className = "" }: 
 
   const placeShort = place.split(",")[0].trim()
 
-  useEffect(() => {
+  // Layout effect: the panels get their final size before the first paint, so the board
+  // never pushes the page down (no layout shift), even though lighting waits for the font.
+  useLayoutEffect(() => {
     const frame = frameRef.current!
     const stack = stackRef.current!
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -109,7 +112,7 @@ export default function Board({ name, role, place, available, className = "" }: 
       return bmp
     }
 
-    const statusBitmap = () => hjoin([LAMP, dotoText("Available")], 3)
+    const statusBitmap = () => hjoin([LAMP, dotoText("Available")], STATUS_GAP)
 
     const composeC = (): Bitmap => {
       const bmp = blank(modC.cols, modC.rows)
@@ -134,9 +137,10 @@ export default function Board({ name, role, place, available, className = "" }: 
     const layout = () => {
       const avail = stack.clientWidth
       if (!avail) return
-      const nameW = dotoText(name).w
-      const roleW = dotoText(role).w
-      const statusW = available ? statusBitmap().w : 0
+      // Widths only: Doto is a fixed grid, so sizing never waits for the font.
+      const nameW = dotoWidth(name)
+      const roleW = dotoWidth(role)
+      const statusW = available ? LAMP.w + STATUS_GAP + dotoWidth("Available") : 0
 
       // Name module: the biggest LEDs on the board. If one line would make the name
       // too small (phones), break it onto one line per word so it stays dominant.
@@ -146,7 +150,7 @@ export default function Board({ name, role, place, available, className = "" }: 
       const words = name.split(/\s+/).filter(Boolean)
       if (pitchB < NAME_MIN_ONE_LINE_PITCH && words.length > 1) {
         nameLines = words
-        pitchB = fit(Math.max(...words.map((w) => dotoText(w).w)), NAME_MAX_PITCH_STACKED)
+        pitchB = fit(Math.max(...words.map((w) => dotoWidth(w))), NAME_MAX_PITCH_STACKED)
       }
       padB = Math.max(1, Math.round(EDGE_PX / pitchB))
       const nameRows = nameLines.length * DOTO_CAP_ROWS + (nameLines.length - 1) * NAME_LINE_GAP + PAD * 2
@@ -157,12 +161,12 @@ export default function Board({ name, role, place, available, className = "" }: 
       const colsS = Math.floor(avail / pitchS)
       padA = padC = Math.max(2, Math.round(EDGE_PX / pitchS))
 
-      const secondsW = dotoText("00:00:00").w
+      const secondsW = dotoWidth("00:00:00")
       showSeconds = padA * 2 + GREETING_MAX_W + 8 + secondsW <= colsS
       modA.configure(pitchS, colsS, GREETING_ROWS + PAD * 2)
 
       const gap = 8
-      const placeW = dotoText(placeShort).w
+      const placeW = dotoWidth(placeShort)
       if (padC * 2 + roleW + placeW + statusW + gap * 2 <= colsS) cLayout = "one-row"
       else if (padC * 2 + roleW + statusW + gap <= colsS) cLayout = "no-place"
       else cLayout = "two-rows"
@@ -304,17 +308,16 @@ export default function Board({ name, role, place, available, className = "" }: 
     document.addEventListener("visibilitychange", onVisibility)
 
     const resizeObserver = new ResizeObserver(() => {
-      if (!ready) return
       layout()
-      if (bootStart < 0 && wipeStart < 0) drawStatic()
+      if (ready && bootStart < 0 && wipeStart < 0) drawStatic()
     })
     resizeObserver.observe(stack)
+    layout() // size the panels now; they light up once Doto has loaded
 
     // ---------- start ----------
     document.fonts.load("900 100px Doto").finally(() => {
       if (destroyed) return
       ready = true
-      layout()
       let booted = false
       try {
         booted = sessionStorage.getItem(BOOT_KEY) === "1"

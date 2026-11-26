@@ -5,7 +5,8 @@ import '@fontsource-variable/geist'
 import './index.css'
 import App from './App.tsx'
 
-inject()
+// Vercel Analytics only exists on the deployed site; locally its script would 404.
+if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname)) inject()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
