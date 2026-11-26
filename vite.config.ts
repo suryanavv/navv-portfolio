@@ -1,7 +1,7 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { PROFILE, WORK, PROJECTS, SKILL_GROUPS, LINKS } from './src/data'
+import { PROFILE, WORK, PROJECTS, SKILL_GROUPS, EXPERTISE, LINKS } from './src/data'
 
 // The one place the site's address lives. index.html uses %SITE_URL%; robots.txt and sitemap.xml are generated.
 const SITE_URL = 'https://suryanavv.in'
@@ -22,6 +22,9 @@ function llmsTxt() {
     '',
     '## Work',
     ...work,
+    '',
+    '## Expertise',
+    ...EXPERTISE.map((e) => `- ${e.title}`),
     '',
     '## Projects',
     ...projects,

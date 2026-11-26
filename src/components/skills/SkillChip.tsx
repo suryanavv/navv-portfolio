@@ -2,17 +2,17 @@ import type { CSSProperties } from "react"
 import type { Skill } from "../../data"
 import { SKILL_ICONS } from "./skillIcons"
 
-function SkillLogo({ id }: { id: string }) {
+export function SkillLogo({ id }: { id: string }) {
   const icon = SKILL_ICONS[id]
   if (!icon) return null
-  const common = "skill-logo size-4 shrink-0"
+  const common = "skill-logo inline-block size-4 shrink-0"
   if (icon.kind === "mask") {
     const url = `url(${icon.src})`
     return (
       <span
         aria-hidden="true"
-        className={`${common} bg-current`}
-        style={{ maskImage: url, WebkitMaskImage: url, maskSize: "contain", WebkitMaskSize: "contain", maskRepeat: "no-repeat", WebkitMaskRepeat: "no-repeat", maskPosition: "center", WebkitMaskPosition: "center" }}
+        className={`${common} ${icon.color ? "" : "bg-current"}`}
+        style={{ backgroundColor: icon.color, maskImage: url, WebkitMaskImage: url, maskSize: "contain", WebkitMaskSize: "contain", maskRepeat: "no-repeat", WebkitMaskRepeat: "no-repeat", maskPosition: "center", WebkitMaskPosition: "center" }}
       />
     )
   }

@@ -110,37 +110,120 @@ export const STACK_SENTENCE: (string | Skill)[] = [
   ".",
 ]
 
+// Technical skills, grouped by kind of work. Order within a group is the order shown.
 export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   {
     area: "Languages",
-    skills: [S("typescript", "TypeScript"), S("javascript", "JavaScript"), S("python", "Python"), S("sql", "SQL"), S("html", "HTML"), S("css", "CSS")],
+    skills: [S("python", "Python"), S("typescript", "TypeScript"), S("javascript", "JavaScript"), S("sql", "SQL"), S("bash", "Bash"), S("html", "HTML5"), S("css", "CSS3")],
   },
   {
     area: "Frontend",
-    skills: [S("react", "React"), S("nextjs", "Next.js"), S("tailwindcss", "Tailwind CSS"), S("shadcnui", "shadcn/ui")],
+    skills: [
+      S("react", "React.js"),
+      S("nextjs", "Next.js"),
+      S("vite", "Vite"),
+      S("tailwindcss", "Tailwind CSS"),
+      S("designsystems", "Design systems"),
+      S("responsive", "Responsive design"),
+      S("uiux", "UI/UX"),
+    ],
   },
   {
-    area: "Backend and data",
-    skills: [S("fastapi", "FastAPI"), S("postgresql", "PostgreSQL"), S("supabase", "Supabase"), S("mongodb", "MongoDB")],
+    area: "Backend",
+    skills: [
+      S("fastapi", "FastAPI"),
+      S("rest", "REST APIs"),
+      S("sqlalchemy", "SQLAlchemy"),
+      S("pydantic", "Pydantic"),
+      S("microservices", "Microservices"),
+      S("workers", "Background workers"),
+      S("webhooks", "Webhooks"),
+    ],
+  },
+  {
+    area: "Databases",
+    skills: [
+      S("postgresql", "PostgreSQL"),
+      S("rds", "Amazon RDS"),
+      S("pgvector", "pgvector"),
+      S("dbdesign", "Database design"),
+      S("dbmigration", "Database migration"),
+      S("backup", "Backup and recovery"),
+    ],
   },
   {
     area: "Cloud and DevOps",
-    skills: [S("aws", "AWS"), S("ecs", "ECS"), S("rds", "RDS"), S("ec2", "EC2"), S("docker", "Docker"), S("dokploy", "Dokploy"), S("cicd", "CI/CD pipelines")],
+    skills: [
+      S("aws", "AWS"),
+      S("ec2", "EC2"),
+      S("ecs", "ECS"),
+      S("ecr", "ECR"),
+      S("s3", "S3"),
+      S("lambda", "Lambda"),
+      S("cloudfront", "CloudFront"),
+      S("docker", "Docker"),
+      S("dokploy", "Dokploy"),
+      S("railway", "Railway"),
+      S("cloudflare", "Cloudflare"),
+      S("cicd", "CI/CD"),
+      S("linux", "Linux"),
+      S("github", "GitHub"),
+    ],
   },
   {
-    area: "AI engineering",
+    area: "AI and automation",
     skills: [
-      S("elevenlabs", "ElevenLabs voice agents"),
-      S("llm", "LLM integrations"),
+      S("openai", "OpenAI"),
+      S("elevenlabs", "ElevenLabs"),
+      S("llm", "LLMs"),
+      S("voiceai", "Voice AI"),
+      S("conversational", "Conversational AI"),
       S("prompt", "Prompt engineering"),
-      S("workflow", "Workflow automation"),
+      S("rag", "RAG"),
+      S("mcp", "MCP"),
+      S("functions", "Function calling"),
       S("evals", "Agent evaluation"),
     ],
   },
   {
-    area: "Tools",
-    skills: [S("git", "Git"), S("github", "GitHub"), S("postman", "Postman"), S("figma", "Figma"), S("vscode", "VS Code"), S("cursor", "Cursor")],
+    area: "Integrations and analytics",
+    skills: [
+      S("googleanalytics", "Google Analytics"),
+      S("searchconsole", "Google Search Console"),
+      S("meta", "Meta Graph API"),
+      S("umami", "Umami"),
+      S("ehr", "EHR/EMR APIs"),
+      S("oauth", "OAuth 2.0"),
+      S("thirdparty", "Third-party APIs"),
+    ],
   },
+  {
+    area: "Security and engineering",
+    skills: [
+      S("iam", "AWS IAM"),
+      S("jwt", "JWT"),
+      S("jwks", "JWKS"),
+      S("rbac", "RBAC"),
+      S("secrets", "Secrets management"),
+      S("systemdesign", "System design"),
+      S("apitesting", "API testing"),
+      S("debugging", "Production debugging"),
+    ],
+  },
+]
+
+// What I can build, kept separate from the technology list. `icon` names a glyph in public/skills/.
+export const EXPERTISE: { title: string; icon: string }[] = [
+  { title: "Full-stack application development", icon: "fullstack" },
+  { title: "Cloud infrastructure and deployment", icon: "cloudinfra" },
+  { title: "AI-powered applications and voice agents", icon: "voiceai" },
+  { title: "Healthcare technology and EHR integrations", icon: "ehr" },
+  { title: "SaaS product development", icon: "saas" },
+  { title: "Workflow and business process automation", icon: "workflow" },
+  { title: "Analytics and dashboard engineering", icon: "analytics" },
+  { title: "Database and infrastructure migration", icon: "dbmigration" },
+  { title: "Scalable backend systems", icon: "backend" },
+  { title: "Production reliability and optimization", icon: "reliability" },
 ]
 
 export const LINKS = [

@@ -6,6 +6,7 @@ import CopyEmail from "./components/CopyEmail"
 import WorkRoute from "./components/WorkRoute"
 import ProjectList from "./components/ProjectList"
 import Skills from "./components/skills/Skills"
+import Expertise from "./components/skills/Expertise"
 import { PROFILE, WORK, PROJECTS, LINKS } from "./data"
 import { NAV_SECTIONS } from "./sections"
 
@@ -52,6 +53,10 @@ function App() {
         <div className="mx-auto w-full max-w-[640px]">
           <Section id="work" title="Work">
             <WorkRoute jobs={WORK} />
+          </Section>
+
+          <Section id="expertise" title="Expertise">
+            <Expertise />
           </Section>
 
           <Section id="projects" title="Projects">
