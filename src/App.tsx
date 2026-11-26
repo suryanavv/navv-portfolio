@@ -5,7 +5,8 @@ import Dock from "./components/Dock"
 import CopyEmail from "./components/CopyEmail"
 import WorkRoute from "./components/WorkRoute"
 import ProjectList from "./components/ProjectList"
-import { PROFILE, WORK, PROJECTS, TOOLKIT, LINKS } from "./data"
+import Skills from "./components/skills/Skills"
+import { PROFILE, WORK, PROJECTS, LINKS } from "./data"
 import { NAV_SECTIONS } from "./sections"
 
 const loadMotionFeatures = () => import("./motion-features").then((mod) => mod.default)
@@ -57,15 +58,8 @@ function App() {
             <ProjectList projects={PROJECTS} />
           </Section>
 
-          <Section id="toolkit" title="Toolkit">
-            <dl className="divide-y divide-border border-y border-border">
-              {TOOLKIT.map((group) => (
-                <div key={group.area} className="grid gap-1 py-3.5 sm:grid-cols-[10rem_1fr] sm:gap-6">
-                  <dt className="font-medium">{group.area}</dt>
-                  <dd className="text-muted">{group.items}</dd>
-                </div>
-              ))}
-            </dl>
+          <Section id="skills" title="Skills">
+            <Skills />
           </Section>
 
           <Section id="contact" title="Contact">

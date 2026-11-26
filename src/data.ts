@@ -87,23 +87,59 @@ export const PROJECTS: Project[] = [
   },
 ]
 
-// Grouped by kind of work rather than an icon grid.
-export const TOOLKIT: { area: string; items: string }[] = [
+export type Skill = { id: string; name: string } // id matches a logo in components/skills/skillIcons.ts
+
+const S = (id: string, name: string): Skill => ({ id, name })
+
+// The everyday stack, read as one sentence with inline logos. Strings are plain text.
+export const STACK_SENTENCE: (string | Skill)[] = [
+  "Day to day I build interfaces with ",
+  S("react", "React"),
+  " and ",
+  S("typescript", "TypeScript"),
+  ", APIs with ",
+  S("fastapi", "FastAPI"),
+  " on ",
+  S("postgresql", "PostgreSQL"),
+  ", ship them on ",
+  S("aws", "AWS"),
+  " with ",
+  S("docker", "Docker"),
+  ", and build voice agents with ",
+  S("elevenlabs", "ElevenLabs"),
+  ".",
+]
+
+export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   {
-    area: "Full-stack",
-    items: "React, TypeScript, Next.js, Tailwind CSS, FastAPI, PostgreSQL, Supabase and MongoDB",
+    area: "Languages",
+    skills: [S("typescript", "TypeScript"), S("javascript", "JavaScript"), S("python", "Python"), S("sql", "SQL"), S("html", "HTML"), S("css", "CSS")],
+  },
+  {
+    area: "Frontend",
+    skills: [S("react", "React"), S("nextjs", "Next.js"), S("tailwindcss", "Tailwind CSS"), S("shadcnui", "shadcn/ui")],
+  },
+  {
+    area: "Backend and data",
+    skills: [S("fastapi", "FastAPI"), S("postgresql", "PostgreSQL"), S("supabase", "Supabase"), S("mongodb", "MongoDB")],
   },
   {
     area: "Cloud and DevOps",
-    items: "AWS (ECS, RDS, EC2), Docker, Dokploy and CI/CD pipelines",
+    skills: [S("aws", "AWS"), S("ecs", "ECS"), S("rds", "RDS"), S("ec2", "EC2"), S("docker", "Docker"), S("dokploy", "Dokploy"), S("cicd", "CI/CD pipelines")],
   },
   {
     area: "AI engineering",
-    items: "ElevenLabs voice agents, LLM integrations, prompt engineering, workflow automation and agent evaluation",
+    skills: [
+      S("elevenlabs", "ElevenLabs voice agents"),
+      S("llm", "LLM integrations"),
+      S("prompt", "Prompt engineering"),
+      S("workflow", "Workflow automation"),
+      S("evals", "Agent evaluation"),
+    ],
   },
   {
     area: "Tools",
-    items: "Git, Postman and Figma",
+    skills: [S("git", "Git"), S("github", "GitHub"), S("postman", "Postman"), S("figma", "Figma"), S("vscode", "VS Code"), S("cursor", "Cursor")],
   },
 ]
 

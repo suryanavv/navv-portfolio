@@ -1,0 +1,8 @@
+Skill logos in this folder:
+- Devicon (MIT): https://github.com/devicons/devicon — css, docker, fastapi, figma, git, html, javascript,
+  mongodb, nextjs, postgresql, postman, python, react, supabase, tailwindcss, typescript, vscode, aws-light/aws-dark
+- Simple Icons (CC0 1.0): https://github.com/simple-icons/simple-icons — github, cursor, elevenlabs, shadcnui
+- AWS Architecture Icons via aws-icons (MIT): https://github.com/MKAbuMattar/aws-icons — ecs, rds, ec2
+- Dokploy (from github.com/Dokploy/dokploy, apps/dokploy/public/icon.svg) — dokploy
+- Lucide (ISC): https://github.com/lucide-icons/lucide — sql, llm, prompt, workflow, evals, cicd
+Brand logos are trademarks of their owners and are used here only to name the tools.

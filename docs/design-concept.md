@@ -182,7 +182,7 @@ Scale (classic typographic progression, px): **12 · 14 · 16 · 20 · 24 · 36 
 1. **Board + intro + contact**: who, where, available or not, how to reach you. Everything a recruiter needs is above the fold.
 2. **Work**: a vertical route. It's a real sequence, so a numbered line is honest here. Your current role's stop is the lit (green) one.
 3. **Projects**: rows like a timetable, not cards. One line each until opened, so all three fit on one screen; screenshots appear on demand.
-4. **Toolkit**: one sentence instead of 19 icons. Recruiters skim it either way; a sentence says how you use the tools.
+4. **Skills** (was "Toolkit"): the everyday stack as a sentence with inline logos, then every skill as a logo chip grouped by kind of work (official SVG logos from Devicon, Simple Icons, AWS architecture icons and Dokploy; line glyphs for concepts). Recruiters skim it either way; a sentence says how you use the tools.
 5. **Elsewhere**: plain text links.
 6. **Footer**: copyright and the last-updated date (it signals the site is maintained).
 
@@ -221,6 +221,8 @@ Each one either answers something the visitor did or is the single load moment.
 | Theme toggle | Icon turns half a turn | No turn |
 | Board clock on narrow screens (no seconds) | Colon blinks each second, like a station clock | Steady colon |
 | Press "Email me" or a dock item | Scales down slightly | No scale |
+| Skills section first seen | Logo chips switch on one after another, 22 ms apart | Shown at once |
+| Hover a skill chip | Chip brightens, its logo lifts 1px; the other chips in that group dim to 55% | No lift |
 
 **Deliberately left out**, and why:
 - No fade-up on each section as it scrolls in. The board boot is the one moment; repeating it everywhere dilutes it.

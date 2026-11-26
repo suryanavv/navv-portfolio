@@ -9,6 +9,7 @@ export const LED_COLORS = {
   lit: "#5EEA8C",
   unlit: "#1C221D",
   glint: "#3E5546",
+  halo: "rgb(94 234 140 / 0.13)",
 }
 
 const DOT_RATIO = 0.42 // dot radius as a fraction of the pitch
@@ -65,8 +66,8 @@ export class LedModule {
 
   /**
    * Draws lit dots. `cell` decides each dot; defaults to reading `bitmap`.
-   * The glow is baked in with one canvas shadow pass (a CSS filter would re-run on every
-   * repaint). Animation frames pass `glow = false`: cheaper, and LEDs warming up don't bloom yet.
+   * The glow is a faint, larger halo drawn under each lit dot: far cheaper than a canvas
+   * shadow blur or a CSS filter. Animation frames pass `glow = false`: LEDs warming up don't bloom yet.
    */
   draw(bitmap: Bitmap | null, cell?: (x: number, y: number) => boolean, glow = true) {
     this.paint(this.lit, bitmap, cell, glow)
@@ -77,23 +78,40 @@ export class LedModule {
     const dpr = this.dpr()
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = LED_COLORS.lit
-    ctx.shadowColor = glow ? "rgb(94 234 140 / 0.55)" : "transparent"
-    ctx.shadowBlur = glow ? Math.max(3, this.pitch * 0.9) * dpr : 0
     const p = this.pitch * dpr
     const r = p * DOT_RATIO
-    ctx.beginPath()
+    const core = new Path2D()
+    const halo = glow ? new Path2D() : null
+    const haloR = r * 1.9
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
         const on = cell ? cell(x, y) : !!bitmap && x < bitmap.w && y < bitmap.h && bitmap.data[y * bitmap.w + x] === 1
         if (!on) continue
         const cx = (x + 0.5) * p
         const cy = (y + 0.5) * p
-        ctx.moveTo(cx + r, cy)
-        ctx.arc(cx, cy, r, 0, Math.PI * 2)
+        core.moveTo(cx + r, cy)
+        core.arc(cx, cy, r, 0, Math.PI * 2)
+        if (halo) {
+          halo.moveTo(cx + haloR, cy)
+          halo.arc(cx, cy, haloR, 0, Math.PI * 2)
+        }
       }
     }
-    ctx.fill()
+    if (halo) {
+      ctx.fillStyle = LED_COLORS.halo
+      ctx.fill(halo)
+    }
+    ctx.fillStyle = LED_COLORS.lit
+    ctx.fill(core)
+  }
+
+  /** Shows the content prepared by the last `reveal`, without repainting it. */
+  showRevealed() {
+    if (!this.cache || !this.revealFor) return
+    const ctx = this.lit.getContext("2d")!
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.clearRect(0, 0, this.lit.width, this.lit.height)
+    ctx.drawImage(this.cache, 0, 0)
   }
 
   /**
@@ -113,8 +131,6 @@ export class LedModule {
     const dpr = this.dpr()
     const p = this.pitch * dpr
     ctx.setTransform(1, 0, 0, 1, 0, 0)
-    ctx.shadowBlur = 0
-    ctx.shadowColor = "transparent"
     ctx.clearRect(0, 0, this.lit.width, this.lit.height)
     const doneCols = Math.max(0, Math.floor(front - band))
     const doneW = Math.min(this.lit.width, Math.round(doneCols * p))

@@ -1,7 +1,7 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { PROFILE, WORK, PROJECTS, TOOLKIT, LINKS } from './src/data'
+import { PROFILE, WORK, PROJECTS, SKILL_GROUPS, LINKS } from './src/data'
 
 // The one place the site's address lives. index.html uses %SITE_URL%; robots.txt and sitemap.xml are generated.
 const SITE_URL = 'https://suryanavv.in'
@@ -11,7 +11,7 @@ const BUILD_DATE = new Date().toISOString().slice(0, 10)
 function llmsTxt() {
   const work = WORK.map((j) => `- ${j.role} at ${j.company} (${j.start} – ${j.end ?? 'present'}): ${j.summary}`)
   const projects = PROJECTS.map((p) => `- [${p.title}](${p.live}): ${p.summary}. Source: ${p.repo}`)
-  const toolkit = TOOLKIT.map((t) => `- ${t.area}: ${t.items}`)
+  const skills = SKILL_GROUPS.map((g) => `- ${g.area}: ${g.skills.map((k) => k.name).join(', ')}`)
   const links = [`- Email: ${PROFILE.email}`, ...LINKS.map((l) => `- [${l.label}](${l.href})`)]
   return [
     `# ${PROFILE.name}`,
@@ -26,8 +26,8 @@ function llmsTxt() {
     '## Projects',
     ...projects,
     '',
-    '## Toolkit',
-    ...toolkit,
+    '## Skills',
+    ...skills,
     '',
     '## Contact',
     ...links,

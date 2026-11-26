@@ -77,7 +77,7 @@ export default function Dock({ items }: { items: readonly DockItem[] }) {
       onFocus={() => setHidden(false)}
       className="group/dock fixed bottom-5 left-1/2 z-50 -translate-x-1/2 transition-[translate,opacity] duration-300 ease-out data-[hidden=true]:translate-y-[calc(100%+1.5rem)] data-[hidden=true]:opacity-0 motion-reduce:transition-none"
     >
-      <div className="flex items-center gap-1 rounded-full border border-border bg-background/80 p-1 shadow-lg shadow-black/10 backdrop-blur-md">
+      <div className="flex items-center gap-0.5 rounded-full border border-border bg-background/80 p-1 min-[400px]:gap-1 shadow-lg shadow-black/10 backdrop-blur-md">
         <ul ref={listRef} className="relative flex items-center">
           {pill && (
             <li
@@ -95,7 +95,7 @@ export default function Dock({ items }: { items: readonly DockItem[] }) {
                   aria-current={isActive ? "location" : undefined}
                   aria-keyshortcuts={item.key}
                   onClick={markJump}
-                  className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition-colors active:scale-95 motion-reduce:active:scale-100 ${
+                  className={`flex items-center gap-1 rounded-full px-2 py-1.5 text-[13px] transition-colors min-[400px]:px-3 min-[400px]:text-sm active:scale-95 motion-reduce:active:scale-100 ${
                     isActive ? "text-foreground" : "text-muted hover:text-foreground"
                   }`}
                 >
@@ -107,7 +107,7 @@ export default function Dock({ items }: { items: readonly DockItem[] }) {
             )
           })}
         </ul>
-        <span aria-hidden="true" className="mx-0.5 h-4 w-px bg-border" />
+        <span aria-hidden="true" className="h-4 w-px bg-border min-[400px]:mx-0.5" />
         <ThemeToggle />
       </div>
     </nav>

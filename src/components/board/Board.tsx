@@ -224,7 +224,10 @@ export default function Board({ name, role, place, available, className = "" }: 
         else {
           bootStart = -1
           bootTargets = null
-          drawStatic()
+          // Name and role panels are already painted off-screen; only the clock may have moved on.
+          modA.draw(composeA(greeting))
+          modB.showRevealed()
+          modC.showRevealed()
         }
       } else if (wipeStart >= 0) {
         const t = Math.min(1, (now - wipeStart) / WIPE_MS)
