@@ -1,17 +1,14 @@
 {
-  "name": "Surya Naveen - Portfolio",
+  "name": "Surya Naveen",
   "short_name": "Surya Naveen",
-  "description": "Surya Naveen - web developer from Andhra Pradesh, India. Specializing in React, TypeScript, and modern web technologies.",
+  "description": "Software engineer at Brightcone.ai building full-stack apps, AWS infrastructure and AI voice agents for healthcare.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#131518",
+  "theme_color": "#131518",
   "icons": [
-    {
-      "src": "/image.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

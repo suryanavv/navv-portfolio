@@ -1,1 +1,265 @@
 @import "tailwindcss";
+
+/* Display font (name + section titles). Self-hosted Latin subset, preloaded in index.html. */
+@font-face {
+  font-family: "Doto";
+  src: url("/fonts/doto-latin-900.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-secondary: var(--secondary);
+  --color-border: var(--border);
+  --color-lamp: var(--lamp);
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Doto", ui-monospace, monospace;
+}
+
+/*
+  "Platform" palette (docs/design-concept.md §4). Hex so Motion can animate them.
+  Text contrast against --background (WCAG AA needs 4.5:1):
+    light (Concrete): foreground 15.3, muted 5.4
+    dark (Night):     foreground 15.0, muted 7.0
+  --lamp is the green "on" light outside the board (needs 3:1 as a graphic; both pass).
+  The board itself has fixed colours in components/board/.
+*/
+:root {
+  --background: #ecedea;
+  --foreground: #15171a;
+  --muted: #5a6066;
+  --secondary: #dfe0dc;
+  --border: #cdd0cb;
+  --lamp: #16a34a;
+}
+
+.dark {
+  --background: #131518;
+  --foreground: #e8e9e6;
+  --muted: #9ba1a7;
+  --secondary: #22262a;
+  --border: #2a2e33;
+  --lamp: #5eea8c;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Focus uses ink, not green: green means "on". */
+  :focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Text links: a quiet underline at rest, a full one drawn left to right on hover. */
+  .link {
+    text-decoration: none;
+    background-image:
+      linear-gradient(currentColor, currentColor),
+      linear-gradient(color-mix(in srgb, currentColor 30%, transparent), color-mix(in srgb, currentColor 30%, transparent));
+    background-size: 0% 1px, 100% 1px;
+    background-position: 0 100%, 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 160ms ease-out;
+  }
+
+  .link:hover,
+  .link:focus-visible {
+    background-size: 100% 1px, 100% 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link {
+      transition: none;
+    }
+  }
+
+  /*
+    Section titles switch on like a row of LEDs: dim until first seen, then lit left to right
+    in hard steps (LEDs switch, they don't fade). The mask is twice as wide as the title:
+    its left half is fully opaque, its right half is "unlit".
+  */
+  @media (prefers-reduced-motion: no-preference) {
+    .led-title {
+      -webkit-mask-image: linear-gradient(to right, #000 50%, rgb(0 0 0 / 0.16) 50%);
+      mask-image: linear-gradient(to right, #000 50%, rgb(0 0 0 / 0.16) 50%);
+      -webkit-mask-size: 200% 100%;
+      mask-size: 200% 100%;
+      -webkit-mask-position: 100% 0;
+      mask-position: 100% 0;
+      transition:
+        -webkit-mask-position 480ms steps(12, end),
+        mask-position 480ms steps(12, end);
+    }
+
+    .led-title[data-lit="true"] {
+      -webkit-mask-position: 0 0;
+      mask-position: 0 0;
+    }
+  }
+
+  /*
+    Skills: small chips (logo + name on a faint background, hairline border, 6px corners) under
+    small-caps <tag/> labels. Inline chips sit in the stack sentence.
+  */
+  .skill-label {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--muted) 80%, transparent);
+  }
+
+  .skill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 1.5rem;
+    padding: 0 0.55rem 0 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    background: color-mix(in srgb, var(--secondary) 55%, transparent);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--foreground);
+    transition:
+      background-color 150ms ease-out,
+      border-color 150ms ease-out,
+      opacity 200ms ease-out,
+      translate 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .skill-chip-inline {
+    margin-inline: 0.25rem;
+    vertical-align: middle;
+  }
+
+  @media (hover: hover) {
+    .skill-chip:hover {
+      background: var(--secondary);
+      border-color: color-mix(in srgb, var(--foreground) 22%, transparent);
+    }
+  }
+
+  /* First view: chips switch on one after another, a few milliseconds apart. */
+  @media (prefers-reduced-motion: no-preference) {
+    .skills[data-seen="false"] .skill-chip {
+      opacity: 0;
+      translate: 0 4px;
+    }
+
+    .skills[data-seen="true"] .skill-chip {
+      transition-delay: 0ms, 0ms, min(calc(var(--i, 0) * 14ms), 700ms), min(calc(var(--i, 0) * 14ms), 700ms);
+    }
+
+    .skills[data-seen="true"] .skill-chip:hover {
+      transition-delay: 0ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skill-chip {
+      transition: none;
+    }
+  }
+
+  /* Expertise list: switches on in sequence; hovering an item lifts its glyph into the text colour. */
+  .expertise-item .skill-logo {
+    transition:
+      transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      background-color 150ms ease-out;
+  }
+
+  @media (hover: hover) {
+    .expertise-item:hover .skill-logo {
+      transform: translateY(-1px) scale(1.12);
+      background-color: var(--foreground);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .expertise-item {
+      transition:
+        opacity 260ms ease-out,
+        translate 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .expertise[data-seen="false"] .expertise-item {
+      opacity: 0;
+      translate: 0 4px;
+    }
+
+    .expertise[data-seen="true"] .expertise-item {
+      transition-delay: calc(var(--i, 0) * 40ms);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .expertise-item .skill-logo {
+      transition: none;
+    }
+  }
+
+  /*
+    The "on" lamp breathes slowly, like a status LED. Only opacity animates (a glow layer),
+    so the browser can run it on the compositor without repainting.
+  */
+  .lamp-breathe {
+    position: relative;
+  }
+
+  .lamp-breathe::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow:
+      0 0 3px var(--lamp),
+      0 0 12px var(--lamp);
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lamp-breathe::after {
+      animation: lamp-breathe 2.8s ease-in-out infinite;
+    }
+  }
+
+  @keyframes lamp-breathe {
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+
+/* View Transition Styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
