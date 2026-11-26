@@ -1,12 +1,10 @@
 Skill logos and glyphs in this folder:
 - Devicon (MIT): https://github.com/devicons/devicon
-  css, docker, fastapi, html, javascript, nextjs, postgresql, python, react, tailwindcss, typescript,
-  vite, cloudflare, linux, oauth, github (via Simple Icons below), aws-light/aws-dark
-- Simple Icons (CC0 1.0): https://github.com/simple-icons/simple-icons
-  github, elevenlabs, bash, pydantic, railway, mcp, googleanalytics, searchconsole, meta, umami, jwt
+  python, typescript, javascript, react, nextjs, vite, tailwindcss, fastapi, postgresql, docker, cloudflare,
+  aws-light / aws-dark (AWS lettering recoloured for dark mode)
+- Simple Icons (CC0 1.0): https://github.com/simple-icons/simple-icons — pydantic, elevenlabs, mcp
 - Lobe Icons (MIT): https://github.com/lobehub/lobe-icons — openai
-- AWS Architecture Icons via aws-icons (MIT): https://github.com/MKAbuMattar/aws-icons
-  ecs, rds, ec2, ecr, s3, lambda, cloudfront, iam
+- AWS Architecture Icons via aws-icons (MIT): https://github.com/MKAbuMattar/aws-icons — ec2, ecs, s3, lambda
 - Dokploy (from github.com/Dokploy/dokploy, apps/dokploy/public/icon.svg) — dokploy
-- Lucide (ISC): https://github.com/lucide-icons/lucide — all other single-word glyphs (sql, sqlalchemy, llm, rag, …)
+- Lucide (ISC): https://github.com/lucide-icons/lucide — sql, sqlalchemy, pgvector, rag and the expertise glyphs
 Brand logos are trademarks of their owners and are used here only to name the tools.

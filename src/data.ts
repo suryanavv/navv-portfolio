@@ -110,46 +110,19 @@ export const STACK_SENTENCE: (string | Skill)[] = [
   ".",
 ]
 
-// Technical skills, grouped by kind of work. Order within a group is the order shown.
+// Technical skills: recognisable tools only. What I do with them lives in EXPERTISE.
 export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   {
     area: "Languages",
-    skills: [S("python", "Python"), S("typescript", "TypeScript"), S("javascript", "JavaScript"), S("sql", "SQL"), S("bash", "Bash"), S("html", "HTML5"), S("css", "CSS3")],
+    skills: [S("python", "Python"), S("typescript", "TypeScript"), S("javascript", "JavaScript"), S("sql", "SQL")],
   },
   {
     area: "Frontend",
-    skills: [
-      S("react", "React.js"),
-      S("nextjs", "Next.js"),
-      S("vite", "Vite"),
-      S("tailwindcss", "Tailwind CSS"),
-      S("designsystems", "Design systems"),
-      S("responsive", "Responsive design"),
-      S("uiux", "UI/UX"),
-    ],
+    skills: [S("react", "React"), S("nextjs", "Next.js"), S("vite", "Vite"), S("tailwindcss", "Tailwind CSS")],
   },
   {
-    area: "Backend",
-    skills: [
-      S("fastapi", "FastAPI"),
-      S("rest", "REST APIs"),
-      S("sqlalchemy", "SQLAlchemy"),
-      S("pydantic", "Pydantic"),
-      S("microservices", "Microservices"),
-      S("workers", "Background workers"),
-      S("webhooks", "Webhooks"),
-    ],
-  },
-  {
-    area: "Databases",
-    skills: [
-      S("postgresql", "PostgreSQL"),
-      S("rds", "Amazon RDS"),
-      S("pgvector", "pgvector"),
-      S("dbdesign", "Database design"),
-      S("dbmigration", "Database migration"),
-      S("backup", "Backup and recovery"),
-    ],
+    area: "Backend and data",
+    skills: [S("fastapi", "FastAPI"), S("sqlalchemy", "SQLAlchemy"), S("pydantic", "Pydantic"), S("postgresql", "PostgreSQL"), S("pgvector", "pgvector")],
   },
   {
     area: "Cloud and DevOps",
@@ -157,58 +130,16 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
       S("aws", "AWS"),
       S("ec2", "EC2"),
       S("ecs", "ECS"),
-      S("ecr", "ECR"),
       S("s3", "S3"),
       S("lambda", "Lambda"),
-      S("cloudfront", "CloudFront"),
       S("docker", "Docker"),
-      S("dokploy", "Dokploy"),
-      S("railway", "Railway"),
       S("cloudflare", "Cloudflare"),
-      S("cicd", "CI/CD"),
-      S("linux", "Linux"),
-      S("github", "GitHub"),
+      S("dokploy", "Dokploy"),
     ],
   },
   {
-    area: "AI and automation",
-    skills: [
-      S("openai", "OpenAI"),
-      S("elevenlabs", "ElevenLabs"),
-      S("llm", "LLMs"),
-      S("voiceai", "Voice AI"),
-      S("conversational", "Conversational AI"),
-      S("prompt", "Prompt engineering"),
-      S("rag", "RAG"),
-      S("mcp", "MCP"),
-      S("functions", "Function calling"),
-      S("evals", "Agent evaluation"),
-    ],
-  },
-  {
-    area: "Integrations and analytics",
-    skills: [
-      S("googleanalytics", "Google Analytics"),
-      S("searchconsole", "Google Search Console"),
-      S("meta", "Meta Graph API"),
-      S("umami", "Umami"),
-      S("ehr", "EHR/EMR APIs"),
-      S("oauth", "OAuth 2.0"),
-      S("thirdparty", "Third-party APIs"),
-    ],
-  },
-  {
-    area: "Security and engineering",
-    skills: [
-      S("iam", "AWS IAM"),
-      S("jwt", "JWT"),
-      S("jwks", "JWKS"),
-      S("rbac", "RBAC"),
-      S("secrets", "Secrets management"),
-      S("systemdesign", "System design"),
-      S("apitesting", "API testing"),
-      S("debugging", "Production debugging"),
-    ],
+    area: "AI",
+    skills: [S("openai", "OpenAI"), S("elevenlabs", "ElevenLabs"), S("rag", "RAG"), S("mcp", "MCP")],
   },
 ]
 

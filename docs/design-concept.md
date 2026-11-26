@@ -221,7 +221,7 @@ Each one either answers something the visitor did or is the single load moment.
 | Theme toggle | Icon turns half a turn | No turn |
 | Board clock on narrow screens (no seconds) | Colon blinks each second, like a station clock | Steady colon |
 | Press "Email me" or a dock item | Scales down slightly | No scale |
-| Skills section first seen | Logo chips switch on one after another, 22 ms apart | Shown at once |
+| Skills section first seen | Logo chips switch on one after another, 12 ms apart | Shown at once |
 | Hover a skill chip | Chip brightens, its logo lifts 1px; the other chips in that group dim to 55% | No lift |
 | Expertise list first seen | Items switch on in sequence, 40 ms apart; hovering one lifts its glyph into the text colour | Shown at once |
 
