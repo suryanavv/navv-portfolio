@@ -9,7 +9,7 @@ export default function Skills() {
   let n = 0
   return (
     <div ref={ref} data-seen={seen} className="skills">
-      <p className="text-lg leading-relaxed">
+      <p className="text-lg leading-relaxed text-muted">
         {STACK_SENTENCE.map((part, i) =>
           typeof part === "string" ? <span key={i}>{part}</span> : <SkillItem key={i} skill={part} index={n++} inline />,
         )}
