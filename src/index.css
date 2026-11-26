@@ -120,22 +120,34 @@
     }
   }
 
-  /* The "on" lamp breathes slowly, like a status LED. */
+  /*
+    The "on" lamp breathes slowly, like a status LED. Only opacity animates (a glow layer),
+    so the browser can run it on the compositor without repainting.
+  */
+  .lamp-breathe {
+    position: relative;
+  }
+
+  .lamp-breathe::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow:
+      0 0 3px var(--lamp),
+      0 0 12px var(--lamp);
+    opacity: 0;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
-    .lamp-breathe {
+    .lamp-breathe::after {
       animation: lamp-breathe 2.8s ease-in-out infinite;
     }
   }
 
   @keyframes lamp-breathe {
-    0%,
-    100% {
-      box-shadow: 0 0 6px var(--lamp);
-    }
     50% {
-      box-shadow:
-        0 0 2px var(--lamp),
-        0 0 12px var(--lamp);
+      opacity: 1;
     }
   }
 }

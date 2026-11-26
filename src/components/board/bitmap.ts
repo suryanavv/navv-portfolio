@@ -60,45 +60,53 @@ const DOTO_SIZE = DOTO_PITCH * 10
 const CAP_ROWS = 7
 const ADVANCE = 6
 
-let scratch: CanvasRenderingContext2D | null = null
-const cache = new Map<string, Bitmap>()
+const glyphs = new Map<string, Bitmap>()
+const texts = new Map<string, Bitmap>()
 
-/** Rasterises upper-case text in Doto 900 to a 7-row bitmap by sampling each dot's centre. */
-export function dotoText(text: string): Bitmap {
-  const key = text.toUpperCase()
-  const cached = cache.get(key)
-  if (cached) return cached
-
-  const cols = Math.max(0, key.length * ADVANCE - 1)
-  const out = blank(cols, CAP_ROWS)
-  if (!cols) return out
-
-  if (!scratch) {
-    const canvas = document.createElement("canvas")
-    scratch = canvas.getContext("2d", { willReadFrequently: true })
-  }
-  const ctx = scratch!
-  const width = key.length * ADVANCE * DOTO_PITCH + DOTO_PITCH
+/**
+ * Rasterises any characters not seen yet, all in one canvas pass, sampling each dot's centre.
+ * Glyphs are cached per character, so the clock (a new string every second) costs nothing.
+ */
+function loadGlyphs(chars: string[]) {
+  const missing = [...new Set(chars)].filter((c) => !glyphs.has(c))
+  if (!missing.length) return
+  const ctx = document.createElement("canvas").getContext("2d", { willReadFrequently: true })!
+  const width = missing.length * ADVANCE * DOTO_PITCH + DOTO_PITCH
   const height = CAP_ROWS * DOTO_PITCH + DOTO_PITCH * 2
   ctx.canvas.width = width
   ctx.canvas.height = height
-  ctx.clearRect(0, 0, width, height)
   ctx.font = `900 ${DOTO_SIZE}px Doto`
   ctx.fillStyle = "#000"
   ctx.textBaseline = "alphabetic"
   const baseline = CAP_ROWS * DOTO_PITCH + DOTO_PITCH
-  ctx.fillText(key, 0, baseline)
-
+  ctx.fillText(missing.join(""), 0, baseline)
   const pixels = ctx.getImageData(0, 0, width, height).data
   const top = baseline - CAP_ROWS * DOTO_PITCH
-  for (let y = 0; y < CAP_ROWS; y++) {
-    const py = top + y * DOTO_PITCH + DOTO_PITCH / 2
-    for (let x = 0; x < cols; x++) {
-      const px = x * DOTO_PITCH + DOTO_PITCH / 2
-      if (pixels[(py * width + px) * 4 + 3] > 128) out.data[y * cols + x] = 1
+  missing.forEach((char, i) => {
+    const glyph = blank(ADVANCE, CAP_ROWS)
+    for (let y = 0; y < CAP_ROWS; y++) {
+      const py = top + y * DOTO_PITCH + DOTO_PITCH / 2
+      for (let x = 0; x < ADVANCE; x++) {
+        const px = (i * ADVANCE + x) * DOTO_PITCH + DOTO_PITCH / 2
+        if (pixels[(py * width + px) * 4 + 3] > 128) glyph.data[y * ADVANCE + x] = 1
+      }
     }
-  }
-  cache.set(key, out)
+    glyphs.set(char, glyph)
+  })
+}
+
+/** Upper-case text in Doto 900 as a 7-row bitmap, built from cached per-character glyphs. */
+export function dotoText(text: string): Bitmap {
+  const key = text.toUpperCase()
+  const cached = texts.get(key)
+  if (cached) return cached
+  const out = blank(dotoWidth(key), CAP_ROWS)
+  if (!out.w) return out
+  const chars = [...key]
+  loadGlyphs(chars)
+  chars.forEach((char, i) => blit(out, glyphs.get(char)!, i * ADVANCE, 0))
+  // Only keep fixed strings; the clock changes every second and is cheap to rebuild from glyphs.
+  if (!/\d/.test(key)) texts.set(key, out)
   return out
 }
 

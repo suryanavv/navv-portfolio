@@ -141,9 +141,11 @@ export default function Board({ name, role, place, available, className = "" }: 
     }
 
     // ---------- layout ----------
-    const layout = () => {
-      const avail = stack.clientWidth
-      if (!avail) return
+    // Writes sizes only, never reads layout back (reads after writes force a full-page reflow).
+    let lastAvail = 0
+    const layout = (avail: number) => {
+      if (!avail || avail === lastAvail) return false
+      lastAvail = avail
       // Widths only: Doto is a fixed grid, so sizing never waits for the font.
       const nameW = dotoWidth(name)
       const roleW = dotoWidth(role)
@@ -181,13 +183,13 @@ export default function Board({ name, role, place, available, className = "" }: 
       modC.configure(pitchS, colsS, rowsC)
 
       // The greeting button covers the greeting area of module A.
+      // Module A is the first panel, so it sits at the frame's padding edge (set in CSS).
       const button = greetButtonRef.current
       if (button) {
-        button.style.left = `${modA.root.offsetLeft}px`
-        button.style.top = `${modA.root.offsetTop}px`
         button.style.width = `${(padA * 2 + GREETING_MAX_W) * pitchS}px`
         button.style.height = `${modA.rows * pitchS}px`
       }
+      return true
     }
 
     // ---------- drawing ----------
@@ -215,17 +217,8 @@ export default function Board({ name, role, place, available, className = "" }: 
         if (!bootTargets) bootTargets = [composeA(greeting), composeB(), composeC()]
         const mods = [modA, modB, modC]
         mods.forEach((mod, i) => {
-          const bmp = bootTargets![i]
           const front = t * (mod.cols + BOOT_BAND)
-          mod.draw(
-            null,
-            (x, y) => {
-              if (x < front - BOOT_BAND) return bmp.data[y * bmp.w + x] === 1
-              if (x < front) return y >= PAD && y < mod.rows - PAD && noise(x, y, shimmer) < 0.28
-              return false
-            },
-            false,
-          )
+          mod.reveal(bootTargets![i], front, BOOT_BAND, (x, y) => y >= PAD && y < mod.rows - PAD && noise(x, y, shimmer) < 0.28)
         })
         if (t < 1) again = true
         else {
@@ -313,6 +306,7 @@ export default function Board({ name, role, place, available, className = "" }: 
     const glintTargets = [modA, modB, modC]
     const onPointerMove = (event: PointerEvent) => {
       if (reduceMotion || event.pointerType !== "mouse") return
+      for (const mod of glintTargets) mod.ensureGlint()
       frame.classList.add("is-glinting")
       for (const mod of glintTargets) {
         const rect = mod.root.getBoundingClientRect()
@@ -330,12 +324,13 @@ export default function Board({ name, role, place, available, className = "" }: 
     frame.addEventListener("pointerleave", onPointerLeave)
     document.addEventListener("visibilitychange", onVisibility)
 
-    const resizeObserver = new ResizeObserver(() => {
-      layout()
-      if (ready && bootStart < 0 && wipeStart < 0) drawStatic()
+    const resizeObserver = new ResizeObserver((entries) => {
+      const changed = layout(Math.floor(entries[0].contentRect.width))
+      if (changed && ready && bootStart < 0 && wipeStart < 0) drawStatic()
     })
     resizeObserver.observe(stack)
-    layout() // size the panels now; they light up once Doto has loaded
+    // One read before first paint so the panels have their size at once (no layout shift).
+    layout(stack.clientWidth)
 
     // ---------- start ----------
     document.fonts.load("900 100px Doto").finally(() => {
@@ -400,9 +395,9 @@ export default function Board({ name, role, place, available, className = "" }: 
           ref={greetButtonRef}
           type="button"
           onClick={() => advanceRef.current()}
-          className="board-greeting-button absolute cursor-pointer rounded-sm"
+          className="board-greeting-button absolute top-3 left-3 cursor-pointer rounded-sm sm:top-4 sm:left-4"
           aria-label="Show the greeting in the next language"
-          style={{ left: 0, top: 0, width: 0, height: 0 }}
+          style={{ width: 0, height: 0 }}
         />
       </div>
 

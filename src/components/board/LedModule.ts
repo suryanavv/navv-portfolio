@@ -50,8 +50,18 @@ export class LedModule {
     this.root.style.height = `${height}px`
     for (const canvas of [this.unlit, this.glint, this.lit]) this.size(canvas, width, height)
     this.fill(this.unlit, LED_COLORS.unlit)
+    // The glint layer is only needed once a mouse moves over the board (see ensureGlint).
+    this.glintReady = false
+  }
+
+  /** Paints the glint layer on first use, so phones and keyboard users never pay for it. */
+  ensureGlint() {
+    if (this.glintReady) return
+    this.glintReady = true
     this.fill(this.glint, LED_COLORS.glint)
   }
+
+  private glintReady = false
 
   /**
    * Draws lit dots. `cell` decides each dot; defaults to reading `bitmap`.
@@ -59,10 +69,14 @@ export class LedModule {
    * repaint). Animation frames pass `glow = false`: cheaper, and LEDs warming up don't bloom yet.
    */
   draw(bitmap: Bitmap | null, cell?: (x: number, y: number) => boolean, glow = true) {
-    const ctx = this.lit.getContext("2d")!
+    this.paint(this.lit, bitmap, cell, glow)
+  }
+
+  private paint(canvas: HTMLCanvasElement, bitmap: Bitmap | null, cell: ((x: number, y: number) => boolean) | undefined, glow: boolean) {
+    const ctx = canvas.getContext("2d")!
     const dpr = this.dpr()
     ctx.setTransform(1, 0, 0, 1, 0, 0)
-    ctx.clearRect(0, 0, this.lit.width, this.lit.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = LED_COLORS.lit
     ctx.shadowColor = glow ? "rgb(94 234 140 / 0.55)" : "transparent"
     ctx.shadowBlur = glow ? Math.max(3, this.pitch * 0.9) * dpr : 0
@@ -82,6 +96,48 @@ export class LedModule {
     ctx.fill()
   }
 
+  /**
+   * Boot frame without re-testing every LED: the finished, glowing content is painted once
+   * into an off-screen canvas, then each frame copies the lit-up columns from it and adds a
+   * few "warming up" dots in the band at the boot front.
+   */
+  reveal(final: Bitmap, front: number, band: number, warming: (x: number, y: number) => boolean) {
+    const cache = (this.cache ??= document.createElement("canvas"))
+    if (this.revealFor !== final || cache.width !== this.lit.width || cache.height !== this.lit.height) {
+      this.revealFor = final
+      cache.width = this.lit.width
+      cache.height = this.lit.height
+      this.paint(cache, final, undefined, true)
+    }
+    const ctx = this.lit.getContext("2d")!
+    const dpr = this.dpr()
+    const p = this.pitch * dpr
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.shadowBlur = 0
+    ctx.shadowColor = "transparent"
+    ctx.clearRect(0, 0, this.lit.width, this.lit.height)
+    const doneCols = Math.max(0, Math.floor(front - band))
+    const doneW = Math.min(this.lit.width, Math.round(doneCols * p))
+    if (doneW > 0) ctx.drawImage(cache, 0, 0, doneW, this.lit.height, 0, 0, doneW, this.lit.height)
+    // Warming band: only the handful of columns at the front.
+    ctx.fillStyle = LED_COLORS.lit
+    const r = p * DOT_RATIO
+    ctx.beginPath()
+    for (let x = doneCols; x < Math.min(this.cols, Math.ceil(front)); x++) {
+      for (let y = 0; y < this.rows; y++) {
+        if (!warming(x, y)) continue
+        const cx = (x + 0.5) * p
+        const cy = (y + 0.5) * p
+        ctx.moveTo(cx + r, cy)
+        ctx.arc(cx, cy, r, 0, Math.PI * 2)
+      }
+    }
+    ctx.fill()
+  }
+
+  private cache: HTMLCanvasElement | null = null
+  private revealFor: Bitmap | null = null
+
   private dpr() {
     return Math.min(window.devicePixelRatio || 1, 3)
   }
@@ -94,22 +150,27 @@ export class LedModule {
     canvas.style.height = `${height}px`
   }
 
+  /** Fills every LED position with `color`: one row of dots is drawn, then copied down. */
   private fill(canvas: HTMLCanvasElement, color: string) {
     const ctx = canvas.getContext("2d")!
     const p = this.pitch * this.dpr()
     const r = p * DOT_RATIO
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = color
-    ctx.beginPath()
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
-        const cx = (x + 0.5) * p
-        const cy = (y + 0.5) * p
-        ctx.moveTo(cx + r, cy)
-        ctx.arc(cx, cy, r, 0, Math.PI * 2)
-      }
+    if (!this.cols || !this.rows) return
+
+    const row = document.createElement("canvas")
+    row.width = canvas.width
+    row.height = Math.ceil(p)
+    const rctx = row.getContext("2d")!
+    rctx.fillStyle = color
+    rctx.beginPath()
+    for (let x = 0; x < this.cols; x++) {
+      const cx = (x + 0.5) * p
+      rctx.moveTo(cx + r, p / 2)
+      rctx.arc(cx, p / 2, r, 0, Math.PI * 2)
     }
-    ctx.fill()
+    rctx.fill()
+    for (let y = 0; y < this.rows; y++) ctx.drawImage(row, 0, Math.round(y * p))
   }
 }
