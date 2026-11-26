@@ -1,0 +1,51 @@
+/* The board is a physical object: identical in light and dark themes. */
+.board-frame {
+  background: #060707;
+  box-shadow:
+    0 0 0 1px #2a2e33,
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 18px 40px -24px rgb(0 0 0 / 0.6);
+}
+
+.led-module {
+  flex: none;
+}
+
+.led-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+/* Lit LEDs bleed a little light. */
+.led-lit {
+  filter: drop-shadow(0 0 1.5px rgb(94 234 140 / 0.6)) drop-shadow(0 0 7px rgb(94 234 140 / 0.22));
+}
+
+/* Unlit dots near the pointer catch a little light. Revealed with a mask; no redraw. */
+.led-glint {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  -webkit-mask-image: radial-gradient(circle 88px at var(--gx, -200px) var(--gy, -200px), #000, transparent);
+  mask-image: radial-gradient(circle 88px at var(--gx, -200px) var(--gy, -200px), #000, transparent);
+}
+
+.board-frame.is-glinting .led-glint {
+  opacity: 1;
+}
+
+.board-greeting-button {
+  background: transparent;
+}
+
+.board-greeting-button:focus-visible {
+  outline: 2px solid #e8e9e6;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .led-glint {
+    display: none;
+  }
+}

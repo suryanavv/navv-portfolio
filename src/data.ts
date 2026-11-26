@@ -1,176 +1,113 @@
-import {
-  Javascript,
-  Html5,
-  Css3,
-  Python,
-  Mysql,
-  ReactIcon,
-  Nextjs,
-  Tailwindcss,
-  Shadcn,
-  Figma,
-  Canva,
-  Vscode,
-  Cursor,
-  Docker,
-  Git,
-  Github,
-  Postman,
-  Mongodb,
-  Postgresql,
-} from './components/icons';
+// All site content lives here.
 
-export const SKILLS = [
-  // Programming Languages
-  {
-    name: "JavaScript",
-    category: "Language",
-    logo: Javascript,
-  },
-  {
-    name: "HTML",
-    category: "Language",
-    logo: Html5,
-  },
-  {
-    name: "CSS",
-    category: "Language",
-    logo: Css3,
-  },
-  {
-    name: "Python",
-    category: "Language",
-    logo: Python,
-  },
-  {
-    name: "SQL",
-    category: "Language",
-    logo: Mysql,
-  },
+export const PROFILE = {
+  name: "Surya Naveen",
+  role: "Software engineer",
+  place: "Andhra Pradesh, India",
+  available: true,
+  email: "naveen534245@gmail.com",
+  // Add a résumé URL (e.g. "/resume.pdf" in public/) to show the Résumé button.
+  resume: "" as string,
+  intro: [
+    "I'm a software engineer who builds products end to end: React and TypeScript interfaces, FastAPI services and PostgreSQL underneath, and the AWS infrastructure they run on.",
+    "At Brightcone.ai I work on AI-powered healthcare software, from EHR integrations and ElevenLabs voice agents to the automated workflows and CI/CD pipelines that keep it shipping.",
+  ],
+}
 
-  // Frameworks & Libraries
-  {
-    name: "React",
-    category: "Framework",
-    logo: ReactIcon,
-  },
-  {
-    name: "Next.js",
-    category: "Framework",
-    logo: Nextjs,
-  },
-  {
-    name: "Tailwind CSS",
-    category: "Framework",
-    logo: Tailwindcss,
-  },
-  {
-    name: "Shadcn UI",
-    category: "Framework",
-    logo: Shadcn,
-  },
+export type Job = {
+  company: string
+  role: string
+  url?: string
+  start: string // "Jan 2025"
+  end?: string // omit for a current role
+  summary: string // one specific line
+}
 
-  // Tools & Software
+// Newest first. One specific line each.
+export const WORK: Job[] = [
   {
-    name: "Figma",
-    category: "Design Tool",
-    logo: Figma,
-  },
-  {
-    name: "Canva",
-    category: "Design Tool",
-    logo: Canva,
-  },
-  {
-    name: "VS Code",
-    category: "Editor",
-    logo: Vscode,
-  },
-  {
-    name: "Cursor",
-    category: "Editor",
-    logo: Cursor,
-  },
-  {
-    name: "Docker",
-    category: "DevOps",
-    logo: Docker,
-  },
-  {
-    name: "Git",
-    category: "Version Control",
-    logo: Git,
-  },
-  {
-    name: "GitHub",
-    category: "Version Control",
-    logo: Github,
-  },
-  {
-    name: "Postman",
-    category: "API Testing",
-    logo: Postman,
-  },
-
-  // Databases
-  {
-    name: "MongoDB",
-    category: "Database",
-    logo: Mongodb,
-  },
-  {
-    name: "PostgreSQL",
-    category: "Database",
-    logo: Postgresql,
+    company: "Brightcone.ai",
+    role: "Software engineer",
+    url: "https://www.brightcone.ai/",
+    start: "Nov 2025",
+    summary:
+      "Developing and maintaining AI-powered healthcare solutions, full-stack applications, EHR integrations, cloud infrastructure, CI/CD pipelines and intelligent workflow automation.",
   },
 ]
 
-export const PROJECTS = [
+export type Project = {
+  slug: string // used for the shareable #link when a row is opened
+  title: string
+  summary: string // what it does, in one line
+  year: number
+  metric?: string // optional: one true number about it, shown in bold before the detail
+  detail: string // what you built, one or two lines
+  stack: string // read as a sentence: "Built with …"
+  live: string
+  repo: string
+  image: string // base path; -800.webp and -1600.webp are served from public/projects/
+}
+
+// Years come from each repo's creation date on GitHub. Screenshots are from the live sites.
+export const PROJECTS: Project[] = [
   {
+    slug: "bridgespace",
     title: "BridgeSpace",
-    desc: "A file and text-sharing platform enabling seamless content transfer between devices on the same Wi-Fi network with real-time notifications.",
-    tech: "React, Supabase, TailwindCSS",
-    link: "https://bridgespace.suryanavv.tech/",
+    summary: "Share files and text between devices on the same Wi-Fi",
+    year: 2025,
+    detail:
+      "Devices on the same network see each other's shared files and text in real time, with private spaces for sharing with specific people.",
+    stack: "TypeScript, React, Supabase and Tailwind CSS",
+    live: "https://bridgespace.suryanavv.in/",
     repo: "https://github.com/suryanavv/BridgeSpace",
-    links: [
-      "https://bridgespace.suryanavv.tech/",
-      "https://bridgespace.vercel.app/"
-    ]
+    image: "/projects/bridgespace",
   },
   {
+    slug: "framecaption",
     title: "FrameCaption",
-    desc: "A modern editor for creating text-behind-subject styled images and thumbnails. Features drag-and-drop editing, layer management, typography controls, and real-time previews.",
-    tech: "NextJS, React, TailwindCSS, Shadcn/ui",
-    link: "https://framecaption.suryanavv.tech/",
+    summary: "Put text behind the subject of a photo",
+    year: 2025,
+    detail:
+      "An editor for text-behind-subject images and thumbnails, with layers, typography controls and a live preview.",
+    stack: "TypeScript, Next.js, Tailwind CSS and shadcn/ui",
+    live: "https://framecaption.suryanavv.in/",
     repo: "https://github.com/suryanavv/FrameCaption",
-    links: [
-      "https://framecaption.suryanavv.tech/",
-      "https://framecaption.vercel.app/"
-    ]
+    image: "/projects/framecaption",
   },
   {
+    slug: "spotlight",
     title: "Spotlight",
-    desc: "A portfolio showcase platform where users can create, customize, and manage their personal portfolios with project management tools and shareable profile links.",
-    tech: "React, Shadcn/ui, Supabase",
-    link: "https://spotlight.suryanavv.tech/",
+    summary: "Build a portfolio and share it with one link",
+    year: 2025,
+    detail: "People create and customise a portfolio, manage their projects in it, and share it with a profile link.",
+    stack: "TypeScript, React, Supabase and shadcn/ui",
+    live: "https://spotlight.suryanavv.in/",
     repo: "https://github.com/suryanavv/spotlight",
-    links: [
-      "https://spotlight.suryanavv.tech/",
-      "https://spotlight-zeta.vercel.app/"
-    ]
+    image: "/projects/spotlight",
   },
-];
+]
 
-
-
-
-export const SOCIALS = [
+// Grouped by kind of work rather than an icon grid.
+export const TOOLKIT: { area: string; items: string }[] = [
   {
-    name: "GitHub",
-    link: "https://github.com/suryanavv",
+    area: "Full-stack",
+    items: "React, TypeScript, Next.js, Tailwind CSS, FastAPI, PostgreSQL, Supabase and MongoDB",
   },
   {
-    name: "LinkedIn",
-    link: "https://www.linkedin.com/in/surya-naveen-veeravalli-609976257/",
+    area: "Cloud and DevOps",
+    items: "AWS (ECS, RDS, EC2), Docker, Dokploy and CI/CD pipelines",
   },
+  {
+    area: "AI engineering",
+    items: "ElevenLabs voice agents, LLM integrations, prompt engineering, workflow automation and agent evaluation",
+  },
+  {
+    area: "Tools",
+    items: "Git, Postman and Figma",
+  },
+]
+
+export const LINKS = [
+  { label: "GitHub", href: "https://github.com/suryanavv" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/surya-naveen-veeravalli-609976257/" },
 ]

@@ -4,85 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preload font for better performance -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,200..800;1,200..800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,200..800;1,200..800&display=swap"></noscript>
+    <!-- Display font (Doto 900, 4 KB) used above the fold -->
+    <link rel="preload" href="/fonts/doto-latin-900.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Favicons: SVG for browser tabs; PNG only for homescreen installs -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: light)" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-    <link rel="apple-touch-icon" href="/image.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/image.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="/image.png" />
+    <!-- Updated by the theme script and toggle to match the page background -->
+    <meta name="theme-color" content="#131518" />
+
+    <!-- Apply the saved (or system) theme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        var theme;
+        try { theme = localStorage.getItem("theme"); } catch (e) { /* storage unavailable */ }
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        document.documentElement.style.colorScheme = theme;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = theme === "dark" ? "#131518" : "#ecedea";
+      })();
+    </script>
+
+    <!-- Icons: one SVG for browser tabs (LED monogram, readable on light and dark tabs); PNGs for home screens -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Surya Naveen" />
 
-    <!-- SEO Meta Tags -->
-    <title>Surya Naveen | Frontend Developer | Web Developer Portfolio</title>
-    <meta name="description" content="Surya Naveen (Naveen Veeravalli, Surya Veeravalli, suryanavv) - Frontend Developer and Web Developer from Andhra Pradesh, India. Specializing in React, TypeScript, and modern web technologies. Portfolio showcasing projects in JavaScript, Next.js, Tailwind CSS." />
-    <meta name="keywords" content="Surya Naveen, Naveen Veeravalli, Surya Veeravalli, suryanavv, frontend developer, front end developer, web developer, React developer, TypeScript developer, JavaScript developer, portfolio, Andhra Pradesh, India, React, TypeScript, Next.js, Tailwind CSS, full-stack developer" />
+    <title>Surya Naveen | Software Engineer</title>
+    <meta name="description" content="Surya Naveen is a software engineer at Brightcone.ai in Andhra Pradesh, India, building full-stack apps with React, TypeScript, FastAPI and PostgreSQL, AWS infrastructure, and AI voice agents for healthcare." />
     <meta name="author" content="Surya Naveen Veeravalli" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="%SITE_URL%/" />
 
-    <!-- Geo-location and Language Meta Tags -->
-    <meta name="geo.region" content="IN-AP" />
-    <meta name="geo.placename" content="Andhra Pradesh, India" />
-    <meta name="geo.position" content="15.9129;79.7400" />
-    <meta name="ICBM" content="15.9129, 79.7400" />
-    <meta name="language" content="English" />
-    <meta name="revisit-after" content="7 days" />
-
-    <!-- Additional SEO Meta Tags -->
-    <meta name="category" content="Technology, Web Development, Portfolio" />
-    <meta name="classification" content="Web Development, Frontend Development" />
-    <meta name="coverage" content="Global" />
-    <meta name="distribution" content="Global" />
-    <meta name="rating" content="General" />
-
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph (WhatsApp, LinkedIn, Slack, Discord, iMessage) -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://suryanavv.tech" />
-    <meta property="og:title" content="Surya Naveen | Frontend Developer | Web Developer Portfolio" />
-    <meta property="og:description" content="Surya Naveen (Naveen Veeravalli, suryanavv) - Frontend Developer and Web Developer from Andhra Pradesh, India. Specializing in React, TypeScript, and modern web technologies." />
-    <meta property="og:image" content="https://suryanavv.tech/og-image.png" />
-    <meta property="og:image:secure_url" content="https://suryanavv.tech/og-image.png" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://suryanavv.tech" />
-    <meta property="twitter:title" content="Surya Naveen | Frontend Developer | Web Developer Portfolio" />
-    <meta property="twitter:description" content="Surya Naveen (Naveen Veeravalli, suryanavv) - Frontend Developer and Web Developer from Andhra Pradesh, India. Specializing in React, TypeScript, and modern web technologies." />
-    <meta property="twitter:image" content="https://suryanavv.tech/og-image.png" />
-    <meta property="twitter:image:alt" content="Surya Naveen - Frontend Developer Portfolio" />
-
-    <!-- Additional Social Media Meta Tags -->
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:site_name" content="Surya Naveen" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Surya Naveen | Software Engineer" />
+    <meta property="og:description" content="Software engineer at Brightcone.ai building full-stack apps, AWS infrastructure and AI voice agents for healthcare. React, TypeScript, FastAPI, PostgreSQL." />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Surya Naveen - Frontend Developer Portfolio" />
-    <meta property="og:site_name" content="Surya Naveen Portfolio" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:alt" content="An LED departure board reading Surya Naveen, software engineer, Andhra Pradesh, available" />
 
-    <!-- LinkedIn -->
-    <meta property="linkedin:owner" content="Surya Naveen" />
-
-    <!-- Pinterest -->
-    <meta name="pinterest-rich-pin" content="true" />
-    <meta property="pinterest:media" content="https://suryanavv.tech/og-image.png" />
-
-    <!-- WhatsApp -->
-    <meta property="og:image:type" content="image/png" />
-
-    <!-- Theme Color (respects light/dark preference) -->
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
-    <meta name="msapplication-TileColor" content="#000000" />
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://suryanavv.tech" />
+    <!-- X / Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Surya Naveen | Software Engineer" />
+    <meta name="twitter:description" content="Software engineer at Brightcone.ai building full-stack apps, AWS infrastructure and AI voice agents for healthcare. React, TypeScript, FastAPI, PostgreSQL." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+    <meta name="twitter:image:alt" content="An LED departure board reading Surya Naveen, software engineer, Andhra Pradesh, available" />
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -91,7 +66,7 @@
       "@graph": [
         {
           "@type": "Person",
-          "@id": "https://suryanavv.tech/#person",
+          "@id": "%SITE_URL%/#person",
           "name": "Surya Naveen Veeravalli",
           "alternateName": [
             "Surya Naveen",
@@ -99,10 +74,15 @@
             "Surya Veeravalli",
             "suryanavv"
           ],
-          "jobTitle": "Frontend Developer",
-          "description": "Frontend Developer and Web Developer specializing in React, TypeScript, and modern web technologies. Creating beautiful, minimal web interfaces.",
-          "image": "https://suryanavv.tech/og-image.png",
-          "url": "https://suryanavv.tech",
+          "jobTitle": "Software Engineer",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Brightcone.ai",
+            "url": "https://www.brightcone.ai/"
+          },
+          "description": "Software engineer at Brightcone.ai building full-stack apps, AWS infrastructure and AI voice agents for healthcare. React, TypeScript, FastAPI, PostgreSQL.",
+          "image": "%SITE_URL%/og-image.png",
+          "url": "%SITE_URL%",
           "sameAs": [
             "https://github.com/suryanavv",
             "https://www.linkedin.com/in/surya-naveen-veeravalli-609976257/"
@@ -113,22 +93,25 @@
             "addressCountry": "India"
           },
           "knowsAbout": [
-            "JavaScript",
             "TypeScript",
             "React",
             "Next.js",
-            "Tailwind CSS",
-            "HTML",
-            "CSS",
-            "Web Development",
-            "Frontend Development",
-            "Full Stack Development"
+            "FastAPI",
+            "PostgreSQL",
+            "AWS",
+            "Docker",
+            "CI/CD",
+            "EHR integration",
+            "Voice agents",
+            "Prompt engineering",
+            "Workflow automation",
+            "Full-stack development"
           ],
           "hasOccupation": {
             "@type": "Occupation",
-            "name": "Frontend Developer",
+            "name": "Software Engineer",
             "occupationLocation": {
-              "@type": "City",
+              "@type": "State",
               "name": "Andhra Pradesh",
               "addressCountry": "India"
             }
@@ -136,15 +119,15 @@
         },
         {
           "@type": "ProfilePage",
-          "@id": "https://suryanavv.tech/#profilepage",
-          "url": "https://suryanavv.tech",
-          "name": "Surya Naveen - Frontend Developer Portfolio",
-          "description": "Portfolio website of Surya Naveen, a Frontend Developer from Andhra Pradesh, India. Showcasing projects, skills, and experience in modern web development.",
+          "@id": "%SITE_URL%/#profilepage",
+          "url": "%SITE_URL%",
+          "name": "Surya Naveen, software engineer",
+          "description": "Portfolio of Surya Naveen, a software engineer from Andhra Pradesh, India: work, projects and contact.",
           "mainEntity": {
-            "@id": "https://suryanavv.tech/#person"
+            "@id": "%SITE_URL%/#person"
           },
           "publisher": {
-            "@id": "https://suryanavv.tech/#person"
+            "@id": "%SITE_URL%/#person"
           },
           "inLanguage": "en-US"
         }
