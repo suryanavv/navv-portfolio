@@ -124,8 +124,7 @@
     Skills: logo + name with no box. In the grid, hovering one lifts its logo and quietly dims
     its neighbours. Inline (in the stack sentence), the name is set slightly heavier.
   */
-  .skill-item,
-  .skill-inline {
+  .skill-item {
     display: inline-flex;
     align-items: center;
     transition:
@@ -147,17 +146,25 @@
     height: 1.125rem;
   }
 
+  /*
+    In the sentence a skill is ordinary inline text: no flex box, no extra margins, so spacing
+    and commas fall exactly as typed and copying the sentence gives plain text. The logo sits
+    on the text's centre line; logo and name never break apart.
+  */
   .skill-inline {
+    display: inline;
     white-space: nowrap;
-    gap: 0.3em;
-    margin-inline: 0.1em;
     font-weight: 500;
-    vertical-align: -0.12em;
+    transition:
+      color 150ms ease-out,
+      opacity 200ms ease-out;
   }
 
   .skill-inline .skill-logo {
-    width: 1em;
-    height: 1em;
+    width: 0.95em;
+    height: 0.95em;
+    margin-right: 0.3em;
+    vertical-align: -0.12em;
   }
 
   .skill-item .skill-logo,
