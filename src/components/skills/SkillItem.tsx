@@ -29,13 +29,11 @@ export function SkillLogo({ id }: { id: string }) {
   return <img {...imgProps} src={icon.src} className={`${common} inline-block`} />
 }
 
-// A small, non-interactive chip: logo + name. `index` staggers its switch-on when the section is first seen.
-export default function SkillChip({ skill, index = 0, inline = false }: { skill: Skill; index?: number; inline?: boolean }) {
+// A skill as logo + name, with no box around it. `inline` is for use inside a sentence.
+// `index` staggers its switch-on when the section is first seen.
+export default function SkillItem({ skill, index = 0, inline = false }: { skill: Skill; index?: number; inline?: boolean }) {
   return (
-    <span
-      className={`skill-chip ${inline ? "mx-0.5 align-[-0.3em]" : ""}`}
-      style={{ "--i": index } as CSSProperties}
-    >
+    <span className={inline ? "skill-inline" : "skill-item"} style={{ "--i": index } as CSSProperties}>
       <SkillLogo id={skill.id} />
       <span>{skill.name}</span>
     </span>

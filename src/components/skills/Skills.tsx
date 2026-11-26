@@ -1,29 +1,29 @@
-import SkillChip from "./SkillChip"
+import SkillItem from "./SkillItem"
 import { useSeenOnce } from "../../hooks/useSeenOnce"
 import { SKILL_GROUPS, STACK_SENTENCE } from "../../data"
 
-// The everyday stack as a sentence with inline logos, then every skill grouped by kind of work.
-// Chips switch on in sequence the first time the section is seen.
+// The everyday stack as a sentence with inline logos, then every skill grouped by where it
+// sits in the stack, as a clean grid of logo + name. Items switch on in sequence on first view.
 export default function Skills() {
   const [ref, seen] = useSeenOnce<HTMLDivElement>(0.15)
   let n = 0
   return (
     <div ref={ref} data-seen={seen} className="skills">
-      <p className="leading-[2.1]">
+      <p className="text-lg leading-relaxed">
         {STACK_SENTENCE.map((part, i) =>
-          typeof part === "string" ? <span key={i}>{part}</span> : <SkillChip key={i} skill={part} index={n++} inline />,
+          typeof part === "string" ? <span key={i}>{part}</span> : <SkillItem key={i} skill={part} index={n++} inline />,
         )}
       </p>
 
-      <dl className="mt-8 divide-y divide-border border-y border-border">
+      <dl className="mt-10 divide-y divide-border border-y border-border">
         {SKILL_GROUPS.map((group) => (
-          <div key={group.area} className="grid gap-2.5 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
-            <dt className="pt-0.5 font-medium">{group.area}</dt>
-            <dd>
-              <ul className="skill-row flex flex-wrap gap-1.5" aria-label={group.area}>
+          <div key={group.area} className="py-5">
+            <dt className="text-sm text-muted">{group.area}</dt>
+            <dd className="mt-3">
+              <ul className="skill-row grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3" aria-label={group.area}>
                 {group.skills.map((skill) => (
                   <li key={skill.id}>
-                    <SkillChip skill={skill} index={n++} />
+                    <SkillItem skill={skill} index={n++} />
                   </li>
                 ))}
               </ul>

@@ -110,7 +110,7 @@ export const STACK_SENTENCE: (string | Skill)[] = [
   ".",
 ]
 
-// Technical skills: recognisable tools first, then the engineering practices I use them for.
+// Technical skills, grouped by where they sit in the stack.
 export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   {
     area: "Languages",
@@ -118,28 +118,41 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   },
   {
     area: "Frontend",
-    skills: [S("react", "React"), S("nextjs", "Next.js"), S("tanstack", "TanStack"), S("tailwindcss", "Tailwind CSS")],
-  },
-  {
-    area: "Backend and data",
-    skills: [S("fastapi", "FastAPI"), S("sqlalchemy", "SQLAlchemy"), S("pydantic", "Pydantic"), S("drizzle", "Drizzle"), S("postgresql", "PostgreSQL")],
-  },
-  {
-    area: "Cloud and DevOps",
     skills: [
-      S("aws", "AWS"),
-      S("ec2", "EC2"),
-      S("ecs", "ECS"),
-      S("s3", "S3"),
-      S("lambda", "Lambda"),
-      S("docker", "Docker"),
-      S("vercel", "Vercel"),
-      S("cloudflare", "Cloudflare"),
-      S("cicd", "CI/CD"),
+      S("react", "React"),
+      S("nextjs", "Next.js"),
+      S("tanstack", "TanStack"),
+      S("tailwindcss", "Tailwind CSS"),
+      S("shadcnui", "shadcn/ui"),
+      S("motion", "Motion"),
     ],
   },
   {
-    area: "Engineering",
+    area: "Backend and databases",
+    skills: [
+      S("fastapi", "FastAPI"),
+      S("pydantic", "Pydantic"),
+      S("zod", "Zod"),
+      S("sqlalchemy", "SQLAlchemy"),
+      S("drizzle", "Drizzle"),
+      S("postgresql", "PostgreSQL"),
+      S("supabase", "Supabase"),
+    ],
+  },
+  {
+    area: "Cloud",
+    skills: [S("aws", "AWS"), S("ec2", "EC2"), S("ecs", "ECS"), S("s3", "S3"), S("lambda", "Lambda"), S("vercel", "Vercel"), S("cloudflare", "Cloudflare")],
+  },
+  {
+    area: "DevOps",
+    skills: [S("docker", "Docker"), S("cicd", "CI/CD"), S("git", "Git"), S("github", "GitHub")],
+  },
+  {
+    area: "AI",
+    skills: [S("openai", "OpenAI"), S("elevenlabs", "ElevenLabs"), S("mcp", "MCP")],
+  },
+  {
+    area: "Architecture",
     skills: [
       S("systemdesign", "System design"),
       S("microservices", "Microservices"),
@@ -149,8 +162,8 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
     ],
   },
   {
-    area: "AI",
-    skills: [S("openai", "OpenAI"), S("elevenlabs", "ElevenLabs"), S("rag", "RAG"), S("mcp", "MCP")],
+    area: "Tools",
+    skills: [S("vscode", "VS Code"), S("cursor", "Cursor"), S("postman", "Postman"), S("figma", "Figma")],
   },
 ]
 
@@ -159,13 +172,9 @@ export const EXPERTISE: { title: string; icon: string }[] = [
   { title: "Full-stack application development", icon: "fullstack" },
   { title: "Cloud infrastructure and deployment", icon: "cloudinfra" },
   { title: "AI-powered applications and voice agents", icon: "voiceai" },
-  { title: "Healthcare technology and EHR integrations", icon: "ehr" },
   { title: "SaaS product development", icon: "saas" },
   { title: "Workflow and business process automation", icon: "workflow" },
-  { title: "Analytics and dashboard engineering", icon: "analytics" },
-  { title: "Database and infrastructure migration", icon: "dbmigration" },
   { title: "Scalable backend systems", icon: "backend" },
-  { title: "Production reliability and optimization", icon: "reliability" },
 ]
 
 export const LINKS = [

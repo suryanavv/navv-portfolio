@@ -120,67 +120,82 @@
     }
   }
 
-  /* Skill chips: logo + name, quiet until hovered. */
-  .skill-chip {
+  /*
+    Skills: logo + name with no box. In the grid, hovering one lifts its logo and quietly dims
+    its neighbours. Inline (in the stack sentence), the name is set slightly heavier.
+  */
+  .skill-item,
+  .skill-inline {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    height: 1.75rem;
-    padding: 0 0.5rem;
-    border: 1px solid var(--border);
-    border-radius: 0.375rem;
-    background: color-mix(in srgb, var(--secondary) 45%, transparent);
-    font-size: 0.875rem;
-    line-height: 1;
-    white-space: nowrap;
-    color: var(--foreground);
     transition:
-      background-color 150ms ease-out,
-      border-color 150ms ease-out,
+      color 150ms ease-out,
       opacity 200ms ease-out,
       translate 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .skill-chip .skill-logo {
+  .skill-item {
+    min-width: 0;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+  }
+
+  .skill-item .skill-logo {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .skill-inline {
+    white-space: nowrap;
+    gap: 0.3em;
+    margin-inline: 0.1em;
+    font-weight: 500;
+    vertical-align: -0.12em;
+  }
+
+  .skill-inline .skill-logo {
+    width: 1em;
+    height: 1em;
+  }
+
+  .skill-item .skill-logo,
+  .skill-inline .skill-logo {
     transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   @media (hover: hover) {
-    .skill-chip:hover {
-      background: var(--secondary);
-      border-color: color-mix(in srgb, var(--foreground) 28%, transparent);
+    .skill-item:hover .skill-logo,
+    .skill-inline:hover .skill-logo {
+      transform: translateY(-1px) scale(1.15);
     }
 
-    .skill-chip:hover .skill-logo {
-      transform: translateY(-1px) scale(1.12);
-    }
-
-    /* Spotlight: hovering one chip in a group quietly dims its neighbours. */
-    .skill-row:has(.skill-chip:hover) .skill-chip:not(:hover) {
-      opacity: 0.55;
+    /* Spotlight: hovering one skill in a group dims the others. */
+    .skill-row:has(.skill-item:hover) .skill-item:not(:hover) {
+      opacity: 0.45;
     }
   }
 
-  /* First view: chips switch on one after another, a few milliseconds apart. */
+  /* First view: skills switch on one after another, a few milliseconds apart. */
   @media (prefers-reduced-motion: no-preference) {
-    .skills[data-seen="false"] .skill-chip {
+    .skills[data-seen="false"] :is(.skill-item, .skill-inline) {
       opacity: 0;
       translate: 0 4px;
     }
 
-    .skills[data-seen="true"] .skill-chip {
-      transition-delay: 0ms, 0ms, min(calc(var(--i, 0) * 12ms), 700ms), min(calc(var(--i, 0) * 12ms), 700ms);
+    .skills[data-seen="true"] :is(.skill-item, .skill-inline) {
+      transition-delay: 0ms, min(calc(var(--i, 0) * 14ms), 700ms), min(calc(var(--i, 0) * 14ms), 700ms);
     }
 
-    .skills[data-seen="true"] .skill-chip:hover,
-    .skill-row:has(.skill-chip:hover) .skill-chip {
+    .skill-row:has(.skill-item:hover) .skill-item {
       transition-delay: 0ms;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .skill-chip,
-    .skill-chip .skill-logo {
+    :is(.skill-item, .skill-inline),
+    :is(.skill-item, .skill-inline) .skill-logo {
       transition: none;
     }
   }

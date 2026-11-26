@@ -1,13 +1,14 @@
 Skill logos and glyphs in this folder:
 - Devicon 2.18 (MIT): https://github.com/devicons/devicon
-  python, typescript, javascript, react, nextjs, tailwindcss, fastapi, postgresql
+  python, typescript, javascript, react, nextjs, tailwindcss, fastapi, postgresql, supabase, git, postman, vscode
 - Simple Icons 16.38 (CC0 1.0): https://github.com/simple-icons/simple-icons
-  tanstack, pydantic, drizzle, vercel, elevenlabs, mcp
+  tanstack, shadcnui, pydantic, zod, drizzle, vercel, elevenlabs, mcp
 - Lobe Icons 1.106 (MIT): https://github.com/lobehub/lobe-icons
-  openai, cloudflare, aws-light / aws-dark (aws-color, lettering set per theme)
+  openai, cloudflare, github, figma, cursor, aws-light / aws-dark (aws-color, lettering set per theme)
 - AWS Architecture Icons (release 2026-01-30) via aws-icons 3.3 (MIT): https://github.com/MKAbuMattar/aws-icons
   ec2, ecs, s3, lambda
+- Motion: mark from motion.dev/favicon.svg — motion
 - Docker: current mark from docker.com (app/uploads/brand/logo/docker-mark-ether.svg) — docker
 - Lucide (ISC): https://github.com/lucide-icons/lucide
-  sql, sqlalchemy, rag, cicd, systemdesign, microservices, jobs, integrations, auth and the expertise glyphs
+  sql, sqlalchemy, cicd, systemdesign, microservices, jobs, integrations, auth and the expertise glyphs
 Brand logos are trademarks of their owners and are used here only to name the tools.

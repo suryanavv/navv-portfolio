@@ -22,23 +22,30 @@ export const SKILL_ICONS: Record<string, SkillIcon> = {
   nextjs: img("nextjs"),
   tanstack: mask("tanstack"),
   tailwindcss: img("tailwindcss"),
-  // Backend and data
+  shadcnui: mask("shadcnui"),
+  motion: mask("motion"),
+  // Backend and databases
   fastapi: img("fastapi"),
   sqlalchemy: mask("sqlalchemy", "#D71F00"),
   pydantic: mask("pydantic", "#E92063"),
+  zod: mask("zod", "#408AFF"),
   drizzle: mask("drizzle"),
   postgresql: img("postgresql"),
-  // Cloud and DevOps
+  supabase: img("supabase"),
+  // Cloud
   aws: { kind: "themed", light: "/skills/aws-light.svg", dark: "/skills/aws-dark.svg" },
   ec2: img("ec2"),
   ecs: img("ecs"),
   s3: img("s3"),
   lambda: img("lambda"),
-  docker: mask("docker"), // Docker's current mark, drawn in the text colour as on docker.com
   vercel: mask("vercel"),
   cloudflare: img("cloudflare"),
+  // DevOps
+  docker: mask("docker"), // Docker's current mark, drawn in the text colour as on docker.com
   cicd: mask("cicd"),
-  // Engineering
+  git: img("git"),
+  github: mask("github"),
+  // Architecture
   systemdesign: mask("systemdesign"),
   microservices: mask("microservices"),
   jobs: mask("jobs"),
@@ -47,17 +54,17 @@ export const SKILL_ICONS: Record<string, SkillIcon> = {
   // AI
   openai: mask("openai"),
   elevenlabs: mask("elevenlabs"),
-  rag: mask("rag"),
   mcp: mask("mcp"),
+  // Tools
+  vscode: img("vscode"),
+  cursor: mask("cursor"),
+  postman: img("postman"),
+  figma: img("figma"),
   // Expertise glyphs
   fullstack: mask("fullstack"),
   cloudinfra: mask("cloudinfra"),
   voiceai: mask("voiceai"),
-  ehr: mask("ehr"),
   saas: mask("saas"),
   workflow: mask("workflow"),
-  analytics: mask("analytics"),
-  dbmigration: mask("dbmigration"),
   backend: mask("backend"),
-  reliability: mask("reliability"),
 }
