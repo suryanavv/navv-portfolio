@@ -1,10 +1,13 @@
 Skill logos and glyphs in this folder:
-- Devicon (MIT): https://github.com/devicons/devicon
-  python, typescript, javascript, react, nextjs, vite, tailwindcss, fastapi, postgresql, docker, cloudflare,
-  aws-light / aws-dark (AWS lettering recoloured for dark mode)
-- Simple Icons (CC0 1.0): https://github.com/simple-icons/simple-icons — pydantic, elevenlabs, mcp
-- Lobe Icons (MIT): https://github.com/lobehub/lobe-icons — openai
-- AWS Architecture Icons via aws-icons (MIT): https://github.com/MKAbuMattar/aws-icons — ec2, ecs, s3, lambda
-- Dokploy (from github.com/Dokploy/dokploy, apps/dokploy/public/icon.svg) — dokploy
-- Lucide (ISC): https://github.com/lucide-icons/lucide — sql, sqlalchemy, pgvector, rag and the expertise glyphs
+- Devicon 2.18 (MIT): https://github.com/devicons/devicon
+  python, typescript, javascript, react, nextjs, tailwindcss, fastapi, postgresql
+- Simple Icons 16.38 (CC0 1.0): https://github.com/simple-icons/simple-icons
+  tanstack, pydantic, drizzle, vercel, elevenlabs, mcp
+- Lobe Icons 1.106 (MIT): https://github.com/lobehub/lobe-icons
+  openai, cloudflare, aws-light / aws-dark (aws-color, lettering set per theme)
+- AWS Architecture Icons (release 2026-01-30) via aws-icons 3.3 (MIT): https://github.com/MKAbuMattar/aws-icons
+  ec2, ecs, s3, lambda
+- Docker: current mark from docker.com (app/uploads/brand/logo/docker-mark-ether.svg) — docker
+- Lucide (ISC): https://github.com/lucide-icons/lucide
+  sql, sqlalchemy, rag, cicd, systemdesign, microservices, jobs, integrations, auth and the expertise glyphs
 Brand logos are trademarks of their owners and are used here only to name the tools.

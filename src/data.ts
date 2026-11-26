@@ -110,7 +110,7 @@ export const STACK_SENTENCE: (string | Skill)[] = [
   ".",
 ]
 
-// Technical skills: recognisable tools only. What I do with them lives in EXPERTISE.
+// Technical skills: recognisable tools first, then the engineering practices I use them for.
 export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   {
     area: "Languages",
@@ -118,11 +118,11 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
   },
   {
     area: "Frontend",
-    skills: [S("react", "React"), S("nextjs", "Next.js"), S("vite", "Vite"), S("tailwindcss", "Tailwind CSS")],
+    skills: [S("react", "React"), S("nextjs", "Next.js"), S("tanstack", "TanStack"), S("tailwindcss", "Tailwind CSS")],
   },
   {
     area: "Backend and data",
-    skills: [S("fastapi", "FastAPI"), S("sqlalchemy", "SQLAlchemy"), S("pydantic", "Pydantic"), S("postgresql", "PostgreSQL"), S("pgvector", "pgvector")],
+    skills: [S("fastapi", "FastAPI"), S("sqlalchemy", "SQLAlchemy"), S("pydantic", "Pydantic"), S("drizzle", "Drizzle"), S("postgresql", "PostgreSQL")],
   },
   {
     area: "Cloud and DevOps",
@@ -133,8 +133,19 @@ export const SKILL_GROUPS: { area: string; skills: Skill[] }[] = [
       S("s3", "S3"),
       S("lambda", "Lambda"),
       S("docker", "Docker"),
+      S("vercel", "Vercel"),
       S("cloudflare", "Cloudflare"),
-      S("dokploy", "Dokploy"),
+      S("cicd", "CI/CD"),
+    ],
+  },
+  {
+    area: "Engineering",
+    skills: [
+      S("systemdesign", "System design"),
+      S("microservices", "Microservices"),
+      S("jobs", "Jobs and workers"),
+      S("integrations", "API integrations"),
+      S("auth", "Auth (OAuth, JWT)"),
     ],
   },
   {

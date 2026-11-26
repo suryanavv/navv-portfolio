@@ -20,23 +20,30 @@ export const SKILL_ICONS: Record<string, SkillIcon> = {
   // Frontend
   react: img("react"),
   nextjs: img("nextjs"),
-  vite: img("vite"),
+  tanstack: mask("tanstack"),
   tailwindcss: img("tailwindcss"),
   // Backend and data
   fastapi: img("fastapi"),
   sqlalchemy: mask("sqlalchemy", "#D71F00"),
   pydantic: mask("pydantic", "#E92063"),
+  drizzle: mask("drizzle"),
   postgresql: img("postgresql"),
-  pgvector: mask("pgvector"),
   // Cloud and DevOps
   aws: { kind: "themed", light: "/skills/aws-light.svg", dark: "/skills/aws-dark.svg" },
   ec2: img("ec2"),
   ecs: img("ecs"),
   s3: img("s3"),
   lambda: img("lambda"),
-  docker: img("docker"),
+  docker: mask("docker"), // Docker's current mark, drawn in the text colour as on docker.com
+  vercel: mask("vercel"),
   cloudflare: img("cloudflare"),
-  dokploy: mask("dokploy"),
+  cicd: mask("cicd"),
+  // Engineering
+  systemdesign: mask("systemdesign"),
+  microservices: mask("microservices"),
+  jobs: mask("jobs"),
+  integrations: mask("integrations"),
+  auth: mask("auth"),
   // AI
   openai: mask("openai"),
   elevenlabs: mask("elevenlabs"),
